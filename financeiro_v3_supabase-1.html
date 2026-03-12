@@ -1036,7 +1036,7 @@ function renderMeses(){
     const pendValor   = totalContas - pagoValor;
     const pagos       = m.contas.filter(c=>c.pago);
     const pct         = totalContas>0 ? Math.round(pagoValor/totalContas*100) : 0;
-    const valorConta  = m.valorEmConta !== undefined ? m.valorEmConta : 0;
+    const valorConta  = Number(m.valor_em_conta) || 0;
     // real remaining = valorConta - pendente
     const realRestante = valorConta - pendValor;
 
@@ -1171,22 +1171,6 @@ function renderMeses(){
 }
 
 function setMesAtivo(i){ state.activeMes=i; renderMeses(); }
-
-function toggleConta(mi,ci){
-  state.meses[mi].contas[ci].pago = !state.meses[mi].contas[ci].pago;
-  save(); renderMeses();
-}
-
-function setValorConta(mi, val){
-  state.meses[mi].valorEmConta = parseFloat(val)||0;
-  save(); renderMeses();
-}
-
-function previewConta(mi, val){
-  const v = parseFloat(val)||0;
-  const el = document.getElementById('ca-val-'+mi);
-  if(el){ el.textContent=fmt(v); el.className='ca-val'+(v<0?' neg':''); }
-}
 
 function setMesFiltro(f){ mesContaFiltro=f; renderMeses(); }
 function setMesOrdem(o){ mesContaOrdem=o; renderMeses(); }
