@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Sonhos</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #18181f;
+    --surface3: #1e1e28;
+    --border: #2a2a38;
+    --text: #e8e6f0;
+    --muted: #6b6880;
+    --pessoal: #7c3aed;
+    --pessoal-light: #a78bfa;
+    --pessoal-bg: rgba(124,58,237,0.1);
+    --trabalho: #0ea5e9;
+    --trabalho-light: #7dd3fc;
+    --trabalho-bg: rgba(14,165,233,0.1);
+    --familia: #f59e0b;
+    --familia-light: #fcd34d;
+    --familia-bg: rgba(245,158,11,0.1);
+    --comprado: #10b981;
+    --comprado-bg: rgba(16,185,129,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* HEADER */
+  header {
+    padding: 28px 20px 0;
+    position: relative;
+  }
+
+  .header-glow {
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 300px; height: 200px;
+    background: radial-gradient(ellipse, rgba(124,58,237,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .app-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #a78bfa, #7dd3fc, #fcd34d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .app-sub {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .btn-hdr {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-hdr:hover { color: var(--text); border-color: #444; }
+
+  /* TOTAL CARD */
+  .total-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .total-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pessoal), var(--trabalho), var(--familia));
+  }
+
+  .total-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .total-item { text-align: center; }
+
+  .total-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .total-lbl {
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .tv-all   { color: var(--text); }
+  .tv-pes   { color: var(--pessoal-light); }
+  .tv-trab  { color: var(--trabalho-light); }
+  .tv-fam   { color: var(--familia-light); }
+
+  .total-divider {
+    width: 1px;
+    background: var(--border);
+    border-radius: 1px;
+    align-self: stretch;
+    margin: auto 0;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 9px 6px;
+    border-radius: 9px;
+    border: none;
+    background: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .tab.active-pessoal   { background: var(--pessoal-bg);  color: var(--pessoal-light);  }
+  .tab.active-trabalho  { background: var(--trabalho-bg); color: var(--trabalho-light); }
+  .tab.active-familia   { background: var(--familia-bg);  color: var(--familia-light);  }
+
+  .tab-count {
+    font-size: 10px;
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-weight: 600;
+  }
+
+  /* ADD FORM */
+  .add-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .add-toggle {
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .add-toggle-lbl {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .add-plus {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    pointer-events: none;
+  }
+
+  .add-plus.open { transform: rotate(45deg); }
+
+  .add-form {
+    display: none;
+    padding: 0 14px 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .add-form.open { display: block; padding-top: 14px; }
+
+  .frow { display: grid; gap: 8px; margin-bottom: 8px; }
+  .frow-2 { grid-template-columns: 1fr 1fr; }
+  .frow-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  input, select, textarea {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 9px 11px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus { border-color: var(--pessoal); }
+  input::placeholder, textarea::placeholder { color: var(--muted); }
+  select option { background: #111118; }
+  textarea { resize: none; height: 52px; }
+
+  .btn-add {
+    width: 100%;
+    background: var(--pessoal);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 11px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: opacity 0.15s;
+  }
+
+  .btn-add:active { opacity: 0.8; }
+  .btn-add.trabalho { background: var(--trabalho); }
+  .btn-add.familia  { background: var(--familia); color: #1a1a00; }
+
+  /* ITEMS */
+  .items-container { }
+
+  /* PRIORITY SECTION */
+  .pri-section { margin-bottom: 18px; }
+
+  .pri-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pri-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ITEM CARD */
+  .item-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 8px;
+    animation: slideIn 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .item-card.comprado {
+    opacity: 0.5;
+    background: var(--comprado-bg);
+    border-color: rgba(16,185,129,0.2);
+  }
+
+  .item-card-accent {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 14px 0 0 14px;
+  }
+
+  .acc-pessoal  { background: var(--pessoal); }
+  .acc-trabalho { background: var(--trabalho); }
+  .acc-familia  { background: var(--familia); }
+
+  .item-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .item-main { flex: 1; min-width: 0; }
+
+  .item-name-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+
+  .item-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .item-card.comprado .item-name {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  .pbadge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .pbadge-logo   { background: rgba(239,68,68,0.15);  color: #f87171; }
+  .pbadge-espera { background: rgba(234,179,8,0.12);  color: #fbbf24; }
+  .pbadge-sonho  { background: rgba(168,85,247,0.12); color: #c084fc; }
+
+  .item-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+
+  .price-pessoal  { color: var(--pessoal-light); }
+  .price-trabalho { color: var(--trabalho-light); }
+  .price-familia  { color: var(--familia-light); }
+  .price-comprado { color: var(--comprado); }
+
+  .item-parcel {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 1px;
+  }
+
+  /* META BAR */
+  .meta-bar {
+    margin-bottom: 8px;
+  }
+
+  .meta-bar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .meta-bar-lbl { font-size: 11px; color: var(--muted); }
+  .meta-bar-val { font-size: 11px; color: var(--text); font-weight: 500; }
+
+  .mbar-out {
+    background: var(--surface3);
+    border-radius: 100px;
+    height: 4px;
+    overflow: hidden;
+  }
+
+  .mbar-in {
+    height: 100%;
+    border-radius: 100px;
+    background: var(--comprado);
+    transition: width 0.4s ease;
+  }
+
+  /* ITEM META */
+  .item-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .item-note { font-size: 11px; color: var(--muted); font-style: italic; }
+
+  .item-link {
+    font-size: 11px;
+    color: var(--trabalho-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .item-link:hover { text-decoration: underline; }
+
+  /* ITEM ACTIONS */
+  .item-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-status {
+    flex: 1;
+    font-size: 11px;
+    padding: 6px 8px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .btn-status:hover { border-color: var(--pessoal); color: var(--pessoal-light); }
+
+  .btn-edit {
+    width: 30px; height: 30px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.15s;
+  }
+
+  .btn-edit:hover { border-color: #555; color: var(--text); }
+
+  .btn-del {
+    width: 30px; height: 30px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.15s;
+  }
+
+  .btn-del:hover { border-color: #ef4444; color: #ef4444; }
+
+  /* EMPTY */
+  .empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.3; }
+  .empty p { font-size: 13px; line-height: 1.6; }
+
+  /* EDIT MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px 32px;
+    width: 100%;
+    max-width: 600px;
+    animation: slideUp 0.2s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-close {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--muted);
+    width: 28px; height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .btn-save {
+    width: 100%;
+    background: var(--pessoal);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 11px;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: #fff; color: #000; }
+    .tabs, .add-section, .item-actions, .header-actions, .modal-overlay { display: none !important; }
+    .item-card { border: 1px solid #ccc; break-inside: avoid; background: #fff; }
+    .item-card-accent { display: none; }
+    .item-name, .item-price { color: #000 !important; -webkit-text-fill-color: #000 !important; }
+    @page { margin: 15mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="modal-overlay" id="editModal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-title">
+      <span>✏️ Editar item</span>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <input type="hidden" id="eId" />
+    <div class="frow">
+      <input type="text" id="eName" placeholder="Nome do item" />
+    </div>
+    <div class="frow frow-2">
+      <select id="eStatus">
+        <option value="quero">✨ Quero</option>
+        <option value="orcando">🔍 Orçando</option>
+        <option value="comprado">✅ Comprado</option>
+      </select>
+      <select id="ePri">
+        <option value="logo">🔥 Quero logo</option>
+        <option value="espera">⏳ Pode esperar</option>
+        <option value="sonho">🌙 Só sonhando</option>
+      </select>
+    </div>
+    <div class="frow frow-2">
+      <input type="number" id="ePrice" placeholder="R$ preço" min="0" step="0.01" />
+      <input type="number" id="eParcelas" placeholder="Parcelas (ex: 12)" min="1" step="1" />
+    </div>
+    <div class="frow">
+      <input type="number" id="eSaved" placeholder="R$ já guardado (meta)" min="0" step="0.01" />
+    </div>
+    <div class="frow">
+      <input type="url" id="eLink" placeholder="Link de compra (opcional)" />
+    </div>
+    <div class="frow">
+      <textarea id="eNote" placeholder="Observação..."></textarea>
+    </div>
+    <button class="btn-save" onclick="saveEdit()">Salvar alterações</button>
+  </div>
+</div>
+
+<header>
+  <div class="header-glow"></div>
+  <div class="header-top">
+    <div>
+      <div class="app-title">Lista de Sonhos</div>
+      <div class="app-sub">seus objetivos de compra</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-hdr" onclick="copyList()">📋 Copiar</button>
+      <button class="btn-hdr" onclick="window.print()">📄 PDF</button>
+    </div>
+  </div>
+
+  <!-- TOTAL CARD -->
+  <div class="total-card">
+    <div class="total-grid">
+      <div class="total-item">
+        <span class="total-val tv-all" id="tTotal">R$0</span>
+        <span class="total-lbl">Total geral</span>
+      </div>
+      <div class="total-item">
+        <span class="total-val tv-pes" id="tPes">R$0</span>
+        <span class="total-lbl">Pessoal</span>
+      </div>
+      <div class="total-item">
+        <span class="total-val tv-trab" id="tTrab">R$0</span>
+        <span class="total-lbl">Trabalho</span>
+      </div>
+      <div class="total-item">
+        <span class="total-val tv-fam" id="tFam">R$0</span>
+        <span class="total-lbl">Família</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active-pessoal" id="tab-pessoal" onclick="setTab('pessoal')">
+      👤 Pessoal <span class="tab-count" id="cnt-pessoal">0</span>
+    </button>
+    <button class="tab" id="tab-trabalho" onclick="setTab('trabalho')">
+      💼 Trabalho <span class="tab-count" id="cnt-trabalho">0</span>
+    </button>
+    <button class="tab" id="tab-familia" onclick="setTab('familia')">
+      🏡 Família <span class="tab-count" id="cnt-familia">0</span>
+    </button>
+  </div>
+</header>
+
+<div style="padding: 0 16px;">
+
+  <!-- ADD FORM -->
+  <div class="add-section">
+    <div class="add-toggle" onclick="toggleForm()">
+      <span class="add-toggle-lbl" id="addLbl">+ Adicionar à lista Pessoal</span>
+      <div class="add-plus" id="addPlus">+</div>
+    </div>
+    <div class="add-form" id="addForm">
+      <div class="frow">
+        <input type="text" id="iName" placeholder="Nome do item (ex: Fone Sony WH-1000XM5)" />
+      </div>
+      <div class="frow frow-2">
+        <select id="iStatus">
+          <option value="quero">✨ Quero</option>
+          <option value="orcando">🔍 Orçando</option>
+          <option value="comprado">✅ Comprado</option>
+        </select>
+        <select id="iPri">
+          <option value="logo">🔥 Quero logo</option>
+          <option value="espera">⏳ Pode esperar</option>
+          <option value="sonho">🌙 Só sonhando</option>
+        </select>
+      </div>
+      <div class="frow frow-2">
+        <input type="number" id="iPrice" placeholder="R$ preço" min="0" step="0.01" />
+        <input type="number" id="iParcelas" placeholder="Parcelas (ex: 12)" min="1" step="1" />
+      </div>
+      <div class="frow">
+        <input type="number" id="iSaved" placeholder="R$ já guardado (meta de economia)" min="0" step="0.01" />
+      </div>
+      <div class="frow">
+        <input type="url" id="iLink" placeholder="Link de compra (opcional)" />
+      </div>
+      <div class="frow">
+        <textarea id="iNote" placeholder="Observação (loja, cor, modelo...)"></textarea>
+      </div>
+      <button class="btn-add" id="btnAdd" onclick="addItem()">+ Adicionar</button>
+    </div>
+  </div>
+
+  <!-- ITEMS LIST -->
+  <div class="items-container" id="itemsContainer"></div>
+
+</div>
+
+<script>
+// ── CONFIG SUPABASE ───────────────────────────────────────────────────────────
+const SUPA_URL = 'https://ynibehkkwcmnghethyxn.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InluaWJlaGtrd2NtbmdoZXRoeXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNDY2MzIsImV4cCI6MjA4ODgyMjYzMn0.ZHQsPuVO0pXPzShw82hm6eecBdf4sE5t6LnP4mriv5o';
+
+async function db(method, path, body) {
+  const res = await fetch(`${SUPA_URL}/rest/v1/${path}`, {
+    method,
+    headers: {
+      'apikey': SUPA_KEY,
+      'Authorization': `Bearer ${SUPA_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+// ── CONSTANTES ────────────────────────────────────────────────────────────────
+const TABS = ['pessoal','trabalho','familia'];
+const PRI_LABEL  = { logo:'🔥 Quero logo', espera:'⏳ Pode esperar', sonho:'🌙 Só sonhando' };
+const PRI_BADGE  = { logo:'pbadge-logo', espera:'pbadge-espera', sonho:'pbadge-sonho' };
+const STATUS_LABEL = { quero:'✨ Quero', orcando:'🔍 Orçando', comprado:'✅ Comprado' };
+const STATUS_NEXT  = { quero:'→ Orçando', orcando:'→ Comprado', comprado:'→ Quero' };
+const STATUS_CYCLE = { quero:'orcando', orcando:'comprado', comprado:'quero' };
+const PRI_ORDER    = { logo:0, espera:1, sonho:2 };
+
+// ── ESTADO ────────────────────────────────────────────────────────────────────
+let currentTab = 'pessoal';
+let items = [];
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function toast(msg, type='ok') {
+  let t = document.getElementById('supa-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'supa-toast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;transition:opacity 0.3s;pointer-events:none;font-family:inherit;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = type==='ok' ? '#1a0533' : type==='err' ? '#c0392b' : '#6b4f00';
+  t.style.color = '#fff';
+  t.style.opacity = '1';
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.style.opacity = '0', 2500);
+}
+
+function setStatus(msg) {
+  const el = document.getElementById('syncStatus');
+  if (el) el.textContent = msg;
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+async function init() {
+  setStatus('⏳ Carregando...');
+  try {
+    items = await db('GET', 'sonhos?order=criado_em.asc') || [];
+    setStatus('☁️ Sincronizado');
+  } catch(e) {
+    setStatus('❌ Erro de conexão');
+    toast('Erro ao conectar ao Supabase.', 'err');
+    console.error(e);
+  }
+  render();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function setTab(tab) {
+  currentTab = tab;
+  TABS.forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    el.className = 'tab';
+    if (t === tab) el.classList.add('active-' + t);
+  });
+  document.getElementById('addLbl').textContent = `+ Adicionar à lista ${tab.charAt(0).toUpperCase()+tab.slice(1)}`;
+  document.getElementById('btnAdd').className = 'btn-add ' + (tab === 'familia' ? 'familia' : tab === 'trabalho' ? 'trabalho' : '');
+  render();
+}
+
+function toggleForm() {
+  const f = document.getElementById('addForm');
+  const p = document.getElementById('addPlus');
+  const o = f.classList.toggle('open');
+  p.classList.toggle('open', o);
+}
+
+// ── CRUD ──────────────────────────────────────────────────────────────────────
+async function addItem() {
+  const nome = document.getElementById('iName').value.trim();
+  if (!nome) { document.getElementById('iName').focus(); return; }
+
+  const novo = {
+    aba:      currentTab,
+    nome,
+    status:   document.getElementById('iStatus').value,
+    prioridade: document.getElementById('iPri').value,
+    preco:    parseFloat(document.getElementById('iPrice').value) || 0,
+    parcelas: parseInt(document.getElementById('iParcelas').value) || 0,
+    guardado: parseFloat(document.getElementById('iSaved').value) || 0,
+    link:     document.getElementById('iLink').value.trim(),
+    observacao: document.getElementById('iNote').value.trim(),
+  };
+
+  const temp = { ...novo, id: 'temp_' + Date.now() };
+  items.push(temp);
+  render();
+  ['iName','iPrice','iParcelas','iSaved','iLink','iNote'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('iName').focus();
+
+  try {
+    const res = await db('POST', 'sonhos', [novo]);
+    const idx = items.findIndex(i => i.id === temp.id);
+    if (idx !== -1 && res?.[0]) items[idx] = res[0];
+    render();
+    toast('Sonho adicionado! ✨');
+  } catch(e) {
+    items = items.filter(i => i.id !== temp.id);
+    render();
+    toast('Erro ao adicionar.', 'err');
+    console.error(e);
+  }
+}
+
+async function cycleStatus(id) {
+  const it = items.find(i => i.id === id);
+  if (!it) return;
+  const novo = STATUS_CYCLE[it.status];
+  it.status = novo;
+  render();
+  try {
+    await db('PATCH', `sonhos?id=eq.${id}`, { status: novo });
+  } catch(e) {
+    toast('Erro ao atualizar.', 'err');
+    console.error(e);
+  }
+}
+
+async function delItem(id) {
+  items = items.filter(i => i.id !== id);
+  render();
+  try {
+    await db('DELETE', `sonhos?id=eq.${id}`, null);
+    toast('Item removido.');
+  } catch(e) {
+    toast('Erro ao remover.', 'err');
+    await init();
+  }
+}
+
+function openEdit(id) {
+  const it = items.find(i => i.id === id);
+  if (!it) return;
+  document.getElementById('eId').value      = it.id;
+  document.getElementById('eName').value    = it.nome;
+  document.getElementById('eStatus').value  = it.status;
+  document.getElementById('ePri').value     = it.prioridade;
+  document.getElementById('ePrice').value   = it.preco || '';
+  document.getElementById('eParcelas').value= it.parcelas || '';
+  document.getElementById('eSaved').value   = it.guardado || '';
+  document.getElementById('eLink').value    = it.link || '';
+  document.getElementById('eNote').value    = it.observacao || '';
+  document.getElementById('editModal').classList.add('open');
+}
+
+async function saveEdit() {
+  const id  = document.getElementById('eId').value;
+  const it  = items.find(i => i.id === id || i.id === parseInt(id));
+  if (!it) return;
+
+  const updated = {
+    nome:       document.getElementById('eName').value.trim() || it.nome,
+    status:     document.getElementById('eStatus').value,
+    prioridade: document.getElementById('ePri').value,
+    preco:      parseFloat(document.getElementById('ePrice').value) || 0,
+    parcelas:   parseInt(document.getElementById('eParcelas').value) || 0,
+    guardado:   parseFloat(document.getElementById('eSaved').value) || 0,
+    link:       document.getElementById('eLink').value.trim(),
+    observacao: document.getElementById('eNote').value.trim(),
+  };
+
+  Object.assign(it, updated);
+  render();
+  closeModalBtn();
+
+  try {
+    await db('PATCH', `sonhos?id=eq.${id}`, updated);
+    toast('Sonho atualizado! ✅');
+  } catch(e) {
+    toast('Erro ao salvar edição.', 'err');
+    await init();
+  }
+}
+
+function closeModal(e) { if (e.target === document.getElementById('editModal')) closeModalBtn(); }
+function closeModalBtn() { document.getElementById('editModal').classList.remove('open'); }
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+const fmtK    = n => n >= 1000 ? `R$${(n/1000).toFixed(1).replace('.',',')}k` : `R$${Math.round(n)}`;
+const fmtFull = n => n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+function render() {
+  TABS.forEach(tab => {
+    const cnt = items.filter(i => i.aba === tab && i.status !== 'comprado').length;
+    document.getElementById('cnt-' + tab).textContent = cnt;
+  });
+
+  const totalAll  = items.filter(i=>i.status!=='comprado').reduce((s,i)=>s+(parseFloat(i.preco)||0),0);
+  const totalPes  = items.filter(i=>i.aba==='pessoal' &&i.status!=='comprado').reduce((s,i)=>s+(parseFloat(i.preco)||0),0);
+  const totalTrab = items.filter(i=>i.aba==='trabalho'&&i.status!=='comprado').reduce((s,i)=>s+(parseFloat(i.preco)||0),0);
+  const totalFam  = items.filter(i=>i.aba==='familia' &&i.status!=='comprado').reduce((s,i)=>s+(parseFloat(i.preco)||0),0);
+
+  document.getElementById('tTotal').textContent = fmtK(totalAll);
+  document.getElementById('tPes').textContent   = fmtK(totalPes);
+  document.getElementById('tTrab').textContent  = fmtK(totalTrab);
+  document.getElementById('tFam').textContent   = fmtK(totalFam);
+
+  const tabItems  = items.filter(i => i.aba === currentTab);
+  const container = document.getElementById('itemsContainer');
+
+  if (!tabItems.length) {
+    const labels = { pessoal:'pessoais', trabalho:'de trabalho', familia:'da família' };
+    container.innerHTML = `<div class="empty"><div class="empty-icon">🌟</div><p>Nenhum sonho ${labels[currentTab]} ainda.<br>Adicione o que você quer!</p></div>`;
+    return;
+  }
+
+  const pending   = tabItems.filter(i => i.status !== 'comprado').sort((a,b) => PRI_ORDER[a.prioridade]-PRI_ORDER[b.prioridade]);
+  const comprados = tabItems.filter(i => i.status === 'comprado');
+
+  const groups = {};
+  pending.forEach(it => {
+    if (!groups[it.prioridade]) groups[it.prioridade] = [];
+    groups[it.prioridade].push(it);
+  });
+
+  let html = '';
+  const priLabels = { logo:'🔥 Quero logo', espera:'⏳ Pode esperar', sonho:'🌙 Só sonhando' };
+
+  ['logo','espera','sonho'].forEach(pri => {
+    if (!groups[pri]?.length) return;
+    html += `<div class="pri-section"><div class="pri-label">${priLabels[pri]}</div>`;
+    groups[pri].forEach(it => { html += renderCard(it); });
+    html += `</div>`;
+  });
+
+  if (comprados.length) {
+    html += `<div class="pri-section"><div class="pri-label">✅ Comprado</div>`;
+    comprados.forEach(it => { html += renderCard(it); });
+    html += `</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function renderCard(it) {
+  const preco = parseFloat(it.preco) || 0;
+  const guardado = parseFloat(it.guardado) || 0;
+  const parcelas = parseInt(it.parcelas) || 0;
+
+  const priceColor = it.status === 'comprado' ? 'price-comprado' : `price-${it.aba}`;
+  const priceStr   = preco > 0 ? `<div class="item-price ${priceColor}">R$${fmtFull(preco)}</div>` : '';
+  const parcelStr  = parcelas > 0 && preco > 0 ? `<div class="item-parcel">${parcelas}x de R$${fmtFull(preco/parcelas)}</div>` : '';
+
+  let metaBar = '';
+  if (preco > 0 && guardado > 0 && it.status !== 'comprado') {
+    const pct    = Math.min(100, Math.round((guardado / preco) * 100));
+    const faltam = Math.max(0, preco - guardado);
+    metaBar = `<div class="meta-bar">
+      <div class="meta-bar-row">
+        <span class="meta-bar-lbl">💰 Guardado: R$${fmtFull(guardado)}</span>
+        <span class="meta-bar-val">faltam R$${fmtFull(faltam)} (${pct}%)</span>
+      </div>
+      <div class="mbar-out"><div class="mbar-in" style="width:${pct}%"></div></div>
+    </div>`;
+  }
+
+  const noteStr = it.observacao ? `<span class="item-note">${it.observacao}</span>` : '';
+  const linkStr = it.link ? `<a class="item-link" href="${it.link}" target="_blank">🔗 ver produto</a>` : '';
+  const pri     = it.prioridade || 'espera';
+
+  return `<div class="item-card ${it.status === 'comprado' ? 'comprado' : ''}">
+    <div class="item-card-accent acc-${it.aba}"></div>
+    <div class="item-top">
+      <div class="item-main">
+        <div class="item-name-row">
+          <span class="item-name">${it.nome}</span>
+          <span class="pbadge ${PRI_BADGE[pri]}">${PRI_LABEL[pri].split(' ').slice(1).join(' ')}</span>
+        </div>
+        <div class="item-meta">${noteStr}${linkStr}</div>
+      </div>
+      <div style="text-align:right; flex-shrink:0;">${priceStr}${parcelStr}</div>
+    </div>
+    ${metaBar}
+    <div class="item-actions">
+      <button class="btn-status" onclick="cycleStatus('${it.id}')">${STATUS_NEXT[it.status]}</button>
+      <button class="btn-edit"   onclick="openEdit('${it.id}')">✏️</button>
+      <button class="btn-del"    onclick="delItem('${it.id}')">✕</button>
+    </div>
+  </div>`;
+}
+
+function copyList() {
+  let text = '🌟 Lista de Sonhos\n' + '='.repeat(30) + '\n\n';
+  TABS.forEach(tab => {
+    const ti = items.filter(i => i.aba === tab && i.status !== 'comprado');
+    if (!ti.length) return;
+    const label = { pessoal:'👤 PESSOAL', trabalho:'💼 TRABALHO', familia:'🏡 FAMÍLIA' }[tab];
+    text += label + '\n';
+    ti.sort((a,b) => PRI_ORDER[a.prioridade] - PRI_ORDER[b.prioridade]);
+    ti.forEach(it => {
+      const preco   = parseFloat(it.preco)||0;
+      const parcelas = parseInt(it.parcelas)||0;
+      const precoStr = preco > 0 ? ` — R$ ${fmtFull(preco)}` : '';
+      const parc    = parcelas > 0 && preco > 0 ? ` (${parcelas}x de R$ ${fmtFull(preco/parcelas)})` : '';
+      const nota    = it.observacao ? ` [${it.observacao}]` : '';
+      text += `  • ${it.nome}${precoStr}${parc}${nota}\n`;
+    });
+    text += '\n';
+  });
+  const total = items.filter(i=>i.status!=='comprado').reduce((s,i)=>s+(parseFloat(i.preco)||0),0);
+  text += '='.repeat(30) + '\n';
+  text += `💰 Total a gastar: R$ ${fmtFull(total)}`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-hdr');
+    const prev = btn.textContent;
+    btn.textContent = '✓ Copiado!';
+    setTimeout(() => btn.textContent = prev, 2000);
+  });
+}
+
+document.getElementById('iName').addEventListener('keydown', e => { if(e.key==='Enter') addItem(); });
+init();
+</script>
+</body>
+</html>
