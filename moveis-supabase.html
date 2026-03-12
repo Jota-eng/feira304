@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Móveis da Casa</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;0,700;1,300&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --surface: #faf7f2;
+    --surface2: #ede8df;
+    --border: #ddd8cc;
+    --text: #1c1814;
+    --muted: #9a9080;
+    --accent: #2d5016;
+    --accent-light: #4a7a28;
+    --warm: #8b4513;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Instrument Sans', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+
+  header {
+    background: var(--accent);
+    padding: 28px 20px 20px;
+    position: relative;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .header-top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .header-title {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #f5f0e8;
+  }
+
+  .header-btns {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .btn-pdf, .btn-copy {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 9px;
+    color: #f5f0e8;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-pdf:hover, .btn-copy:hover { background: rgba(255,255,255,0.25); }
+
+  .header-sub {
+    font-size: 13px;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 18px;
+  }
+
+  @media print {
+    body { background: #fff; padding-bottom: 0; }
+    header { background: #2d5016 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .btn-pdf, .add-section, .room-add-row, .item-right, .room-chev { display: none !important; }
+    .price-bar { background: #2d5016 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .room-body { display: block !important; }
+    .room-card { break-inside: avoid; border: 1px solid #ccc; margin-bottom: 10px; }
+    .item-row { break-inside: avoid; }
+    .rooms { padding: 10px 16px 0; }
+    .progress-bar-inner { background: #a8d060 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .rbar-in { background: #4a7a28 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sbadge-tem      { background: #e8f0df !important; color: #2d5016 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sbadge-falta    { background: #f5e0e0 !important; color: #8b1a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sbadge-orcamento{ background: #f5ecd0 !important; color: #6b4f00 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sbadge-comprado { background: #ddeef5 !important; color: #1a4a6b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .pri-urgente { background: #c0392b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { margin: 15mm; }
+  }
+
+  .overall-progress {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .overall-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .overall-label span {
+    font-size: 11px;
+    color: rgba(245,240,232,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .overall-label strong {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: #f5f0e8;
+  }
+
+  .progress-bar-outer {
+    background: rgba(255,255,255,0.15);
+    border-radius: 100px;
+    height: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    border-radius: 100px;
+    background: #a8d060;
+    transition: width 0.5s ease;
+  }
+
+  .header-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .hstat {
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 8px 6px;
+    text-align: center;
+  }
+
+  .hstat-val {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: #f5f0e8;
+    display: block;
+  }
+
+  .hstat-lbl {
+    font-size: 10px;
+    color: rgba(245,240,232,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* PRICE BAR */
+  .price-bar {
+    margin: 14px 16px 0;
+    background: var(--accent);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .ps-item { text-align: center; }
+
+  .ps-val {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: #f5f0e8;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .ps-lbl {
+    font-size: 10px;
+    color: rgba(245,240,232,0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .ps-div { background: rgba(255,255,255,0.15); height: 32px; border-radius: 1px; }
+
+  /* ADD SECTION */
+  .add-section {
+    margin: 14px 16px 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .add-toggle-row {
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .add-toggle-title {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .add-plus {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    background: var(--accent);
+    color: #f5f0e8;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    pointer-events: none;
+  }
+
+  .add-plus.open { transform: rotate(45deg); }
+
+  .add-form {
+    display: none;
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .add-form.open { display: block; padding-top: 14px; }
+
+  .frow { display: grid; gap: 8px; margin-bottom: 8px; }
+  .frow-2 { grid-template-columns: 1fr 1fr; }
+  .frow-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  input, select, textarea {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    padding: 9px 11px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  input::placeholder, textarea::placeholder { color: var(--muted); }
+  select option { background: var(--surface); }
+  textarea { resize: none; height: 56px; }
+
+  .btn-add {
+    width: 100%;
+    background: var(--accent);
+    color: #f5f0e8;
+    border: none;
+    border-radius: 9px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 11px;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: opacity 0.15s;
+  }
+
+  .btn-add:active { opacity: 0.8; }
+
+  /* ROOMS */
+  .rooms { padding: 14px 16px 0; }
+
+  .room-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .room-hdr {
+    padding: 13px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .room-icon {
+    font-size: 20px;
+    width: 38px; height: 38px;
+    background: var(--surface2);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .room-info { flex: 1; min-width: 0; }
+
+  .room-name {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .room-prog-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .rbar-out {
+    flex: 1;
+    background: var(--surface2);
+    border-radius: 100px;
+    height: 5px;
+    overflow: hidden;
+  }
+
+  .rbar-in {
+    height: 100%;
+    border-radius: 100px;
+    background: var(--accent-light);
+    transition: width 0.4s ease;
+  }
+
+  .room-pct { font-size: 11px; color: var(--muted); font-weight: 600; min-width: 30px; text-align: right; }
+
+  .room-cnt {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--surface2);
+    border-radius: 20px;
+    padding: 3px 8px;
+    flex-shrink: 0;
+  }
+
+  .room-chev { color: var(--muted); font-size: 11px; transition: transform 0.2s; flex-shrink: 0; }
+  .room-chev.open { transform: rotate(180deg); }
+
+  .room-body { border-top: 1px solid var(--border); display: none; }
+  .room-body.open { display: block; }
+
+  /* ITEM ROW */
+  .item-row {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: fadeIn 0.18s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-3px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .item-row:last-of-type { border-bottom: none; }
+  .item-row.status-tem { opacity: 0.55; }
+
+  .item-left { flex: 1; min-width: 0; }
+
+  .item-name-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+
+  .pri-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .pri-urgente { background: #c0392b; }
+  .pri-normal  { background: var(--border); }
+
+  .item-name { font-size: 14px; font-weight: 500; }
+
+  .sbadge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+  }
+
+  .sbadge-tem      { background: #e8f0df; color: #2d5016; }
+  .sbadge-falta    { background: #f5e0e0; color: #8b1a1a; }
+  .sbadge-orcamento{ background: #f5ecd0; color: #6b4f00; }
+  .sbadge-comprado { background: #ddeef5; color: #1a4a6b; }
+
+  .item-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .meta-price { font-size: 12px; color: var(--accent); font-weight: 600; }
+  .meta-note  { font-size: 11px; color: var(--muted); font-style: italic; }
+  .meta-link  { font-size: 11px; color: var(--warm); text-decoration: none; }
+  .meta-link:hover { text-decoration: underline; }
+
+  .item-right { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+
+  .btn-cycle {
+    font-size: 10px;
+    padding: 4px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'Instrument Sans', sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-cycle:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-del {
+    width: 26px; height: 26px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    transition: all 0.15s;
+  }
+
+  .btn-del:hover { border-color: #c0392b; color: #c0392b; }
+
+  .room-add-row {
+    padding: 9px 14px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .room-add-row button {
+    background: none;
+    border: none;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s;
+    padding: 0;
+  }
+
+  .room-add-row button:hover { color: var(--accent); }
+
+  .room-empty {
+    padding: 16px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top-row">
+    <div class="header-title">🏠 Móveis da Casa</div>
+    <div class="header-btns">
+      <button class="btn-copy" onclick="copyList()">📋 Copiar lista</button>
+      <button class="btn-pdf" onclick="exportPDF()">📄 Exportar PDF</button>
+    </div>
+  </div>
+  <div class="header-sub">Acompanhamento por cômodo</div>
+  <div class="overall-progress">
+    <div class="overall-label">
+      <span>Progresso geral</span>
+      <strong id="overallPct">0%</strong>
+    </div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="overallBar" style="width:0%"></div>
+    </div>
+    <div class="header-stats">
+      <div class="hstat"><span class="hstat-val" id="sTem">0</span><span class="hstat-lbl">Tem</span></div>
+      <div class="hstat"><span class="hstat-val" id="sFalta">0</span><span class="hstat-lbl">Falta</span></div>
+      <div class="hstat"><span class="hstat-val" id="sOrc">0</span><span class="hstat-lbl">Orç.</span></div>
+      <div class="hstat"><span class="hstat-val" id="sComp">0</span><span class="hstat-lbl">Comprado</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="price-bar">
+  <div class="ps-item"><span class="ps-val" id="psGasto">R$0</span><span class="ps-lbl">Gasto real</span></div>
+  <div class="ps-div"></div>
+  <div class="ps-item"><span class="ps-val" id="psEstim">R$0</span><span class="ps-lbl">A gastar</span></div>
+  <div class="ps-div"></div>
+  <div class="ps-item"><span class="ps-val" id="psTotal">R$0</span><span class="ps-lbl">Total prev.</span></div>
+</div>
+
+<!-- ADD -->
+<div class="add-section">
+  <div class="add-toggle-row" onclick="toggleForm()">
+    <span class="add-toggle-title">+ Adicionar item</span>
+    <div class="add-plus" id="addPlus">+</div>
+  </div>
+  <div class="add-form" id="addForm">
+    <div class="frow frow-2">
+      <input type="text" id="iName" placeholder="Nome do item (ex: Sofá)" />
+      <select id="iRoom">
+        <option value="sala_jogos">🎮 Sala de Jogos</option>
+        <option value="vao">🚪 Vão</option>
+        <option value="sala">🛋 Sala</option>
+        <option value="quarto">🛏 Quarto</option>
+        <option value="cozinha">🍳 Cozinha</option>
+        <option value="banheiro">🚿 Banheiro</option>
+      </select>
+    </div>
+    <div class="frow frow-3">
+      <select id="iStatus">
+        <option value="falta">❌ Falta</option>
+        <option value="orcamento">💬 Orçamento</option>
+        <option value="comprado">✅ Comprado</option>
+        <option value="tem">🏠 Já tem</option>
+      </select>
+      <select id="iPri">
+        <option value="normal">— Normal</option>
+        <option value="urgente">🔴 Urgente</option>
+      </select>
+      <input type="number" id="iPrice" placeholder="R$ estimado" min="0" step="0.01" />
+    </div>
+    <div class="frow">
+      <input type="number" id="iPriceReal" placeholder="R$ gasto real (se comprado)" min="0" step="0.01" />
+    </div>
+    <div class="frow">
+      <input type="url" id="iLink" placeholder="Link de referência (opcional)" />
+    </div>
+    <div class="frow">
+      <textarea id="iNote" placeholder="Observação (tamanho, cor, loja...)"></textarea>
+    </div>
+    <button class="btn-add" onclick="addItem()">Adicionar item</button>
+  </div>
+</div>
+
+<div class="rooms" id="roomsEl"></div>
+
+<script>
+// ── CONFIG SUPABASE ──────────────────────────────────────────────────────────
+const SUPA_URL = 'https://ynibehkkwcmnghethyxn.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InluaWJlaGtrd2NtbmdoZXRoeXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNDY2MzIsImV4cCI6MjA4ODgyMjYzMn0.ZHQsPuVO0pXPzShw82hm6eecBdf4sE5t6LnP4mriv5o';
+
+async function db(method, path, body) {
+  const res = await fetch(`${SUPA_URL}/rest/v1/${path}`, {
+    method,
+    headers: {
+      'apikey': SUPA_KEY,
+      'Authorization': `Bearer ${SUPA_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'return=representation' : 'return=representation',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
+  }
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+// ── ROOMS & DEFAULTS ─────────────────────────────────────────────────────────
+const ROOMS = [
+  { id: 'sala_jogos', name: 'Sala de Jogos', icon: '🎮' },
+  { id: 'vao',        name: 'Vão',           icon: '🚪' },
+  { id: 'sala',       name: 'Sala',          icon: '🛋' },
+  { id: 'quarto',     name: 'Quarto',        icon: '🛏' },
+  { id: 'cozinha',    name: 'Cozinha',       icon: '🍳' },
+  { id: 'banheiro',   name: 'Banheiro',      icon: '🚿' },
+];
+
+const DEFAULTS = [
+  { comodo:'vao',       nome:'Relógio',           status:'falta', prioridade:'normal',  preco_estimado:35.90, preco_real:0, link:'', observacao:'' },
+  { comodo:'vao',       nome:'Quadros',            status:'falta', prioridade:'normal',  preco_estimado:80,    preco_real:0, link:'', observacao:'' },
+  { comodo:'quarto',    nome:'Cama',               status:'falta', prioridade:'urgente', preco_estimado:1799,  preco_real:0, link:'', observacao:'King e molas' },
+  { comodo:'quarto',    nome:'Guarda roupa',        status:'falta', prioridade:'normal',  preco_estimado:1300,  preco_real:0, link:'', observacao:'' },
+  { comodo:'quarto',    nome:'Prateleiras',         status:'falta', prioridade:'normal',  preco_estimado:150,   preco_real:0, link:'', observacao:'' },
+  { comodo:'quarto',    nome:'Criadomudo',          status:'falta', prioridade:'normal',  preco_estimado:200,   preco_real:0, link:'', observacao:'' },
+  { comodo:'quarto',    nome:'Ventiladores',        status:'falta', prioridade:'normal',  preco_estimado:300,   preco_real:0, link:'', observacao:'' },
+  { comodo:'quarto',    nome:'Televisão',           status:'falta', prioridade:'normal',  preco_estimado:1600,  preco_real:0, link:'', observacao:'LG, TCL ou Roku' },
+  { comodo:'quarto',    nome:'Relógio',             status:'falta', prioridade:'normal',  preco_estimado:35.90, preco_real:0, link:'', observacao:'' },
+  { comodo:'quarto',    nome:'Quadros',             status:'falta', prioridade:'normal',  preco_estimado:80,    preco_real:0, link:'', observacao:'' },
+  { comodo:'sala',      nome:'Televisão',           status:'falta', prioridade:'urgente', preco_estimado:2000,  preco_real:0, link:'', observacao:'LG' },
+  { comodo:'sala',      nome:'Sofá',                status:'falta', prioridade:'urgente', preco_estimado:1500,  preco_real:0, link:'', observacao:'' },
+  { comodo:'sala',      nome:'Prateleiras',         status:'falta', prioridade:'normal',  preco_estimado:150,   preco_real:0, link:'', observacao:'' },
+  { comodo:'sala',      nome:'Mesa',                status:'falta', prioridade:'normal',  preco_estimado:1000,  preco_real:0, link:'', observacao:'' },
+  { comodo:'sala',      nome:'Painel/Hack',         status:'falta', prioridade:'normal',  preco_estimado:500,   preco_real:0, link:'', observacao:'' },
+  { comodo:'sala',      nome:'Decoração',           status:'falta', prioridade:'normal',  preco_estimado:250,   preco_real:0, link:'', observacao:'' },
+  { comodo:'sala',      nome:'Relógio',             status:'falta', prioridade:'normal',  preco_estimado:35.90, preco_real:0, link:'', observacao:'' },
+  { comodo:'sala',      nome:'Alexa',               status:'falta', prioridade:'normal',  preco_estimado:600,   preco_real:0, link:'', observacao:'' },
+  { comodo:'cozinha',   nome:'Geladeira',           status:'falta', prioridade:'urgente', preco_estimado:2600,  preco_real:0, link:'', observacao:'Inox Frost Free' },
+  { comodo:'cozinha',   nome:'Air Fryer',           status:'falta', prioridade:'normal',  preco_estimado:300,   preco_real:0, link:'', observacao:'' },
+  { comodo:'cozinha',   nome:'Pratos em geral',     status:'falta', prioridade:'normal',  preco_estimado:0,     preco_real:0, link:'', observacao:'' },
+  { comodo:'sala_jogos',nome:'TV / Monitor',        status:'falta', prioridade:'normal',  preco_estimado:0,     preco_real:0, link:'', observacao:'' },
+  { comodo:'sala_jogos',nome:'Mesa / Setup',        status:'falta', prioridade:'normal',  preco_estimado:0,     preco_real:0, link:'', observacao:'' },
+  { comodo:'sala_jogos',nome:'Cadeira Gamer',       status:'falta', prioridade:'normal',  preco_estimado:0,     preco_real:0, link:'', observacao:'' },
+  { comodo:'banheiro',  nome:'Espelho',             status:'falta', prioridade:'urgente', preco_estimado:0,     preco_real:0, link:'', observacao:'' },
+  { comodo:'banheiro',  nome:'Armário / Gabinete',  status:'falta', prioridade:'normal',  preco_estimado:0,     preco_real:0, link:'', observacao:'' },
+  { comodo:'banheiro',  nome:'Toalheiro',           status:'falta', prioridade:'normal',  preco_estimado:0,     preco_real:0, link:'', observacao:'' },
+  { comodo:'banheiro',  nome:'Box / Cortina',       status:'falta', prioridade:'normal',  preco_estimado:0,     preco_real:0, link:'', observacao:'' },
+];
+
+// ── ESTADO ────────────────────────────────────────────────────────────────────
+let items = [];
+let openRooms = new Set(['vao','sala','cozinha']);
+let syncing = false;
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function toast(msg, type='ok') {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;transition:opacity 0.3s;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = type === 'ok' ? '#2d5016' : type === 'err' ? '#c0392b' : '#6b4f00';
+  t.style.color = '#f5f0e8';
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.opacity = '0'; }, 2500);
+}
+
+function setSyncing(on) {
+  syncing = on;
+  const h = document.querySelector('.header-sub');
+  if (h) h.textContent = on ? '⏳ Sincronizando...' : '☁️ Sincronizado com Supabase';
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+async function init() {
+  setSyncing(true);
+  try {
+    const data = await db('GET', 'moveis?order=criado_em.asc', null);
+    if (data && data.length > 0) {
+      items = data;
+    } else {
+      // Primeira vez: sobe os defaults
+      const inserted = await db('POST', 'moveis', DEFAULTS);
+      items = inserted || [];
+      toast('Lista criada com itens padrão! 🏠');
+    }
+  } catch(e) {
+    toast('Erro ao conectar ao Supabase. Tente recarregar.', 'err');
+    console.error(e);
+  }
+  setSyncing(false);
+  render();
+}
+
+// ── CRUD ──────────────────────────────────────────────────────────────────────
+function toggleForm() {
+  const f = document.getElementById('addForm');
+  const p = document.getElementById('addPlus');
+  const o = f.classList.toggle('open');
+  p.classList.toggle('open', o);
+}
+
+async function addItem() {
+  const nome = document.getElementById('iName').value.trim();
+  if (!nome) { document.getElementById('iName').focus(); return; }
+  const comodo = document.getElementById('iRoom').value;
+
+  const novo = {
+    comodo,
+    nome,
+    status:          document.getElementById('iStatus').value,
+    prioridade:      document.getElementById('iPri').value,
+    preco_estimado:  parseFloat(document.getElementById('iPrice').value) || 0,
+    preco_real:      parseFloat(document.getElementById('iPriceReal').value) || 0,
+    link:            document.getElementById('iLink').value.trim(),
+    observacao:      document.getElementById('iNote').value.trim(),
+  };
+
+  setSyncing(true);
+  try {
+    const res = await db('POST', 'moveis', [novo]);
+    items.push(...res);
+    openRooms.add(comodo);
+    render();
+    ['iName','iPrice','iPriceReal','iLink','iNote'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('iName').focus();
+    toast('Item adicionado! ✅');
+  } catch(e) {
+    toast('Erro ao adicionar item.', 'err');
+    console.error(e);
+  }
+  setSyncing(false);
+}
+
+async function cycleStatus(id) {
+  const it = items.find(i => i.id === id);
+  if (!it) return;
+  const cycle = ['falta','orcamento','comprado','tem'];
+  const novoStatus = cycle[(cycle.indexOf(it.status) + 1) % cycle.length];
+
+  // Otimista: atualiza local imediatamente
+  it.status = novoStatus;
+  render();
+
+  try {
+    await db('PATCH', `moveis?id=eq.${id}`, { status: novoStatus, atualizado_em: new Date().toISOString() });
+  } catch(e) {
+    toast('Erro ao atualizar status.', 'err');
+    console.error(e);
+  }
+}
+
+async function del(id) {
+  // Otimista
+  items = items.filter(i => i.id !== id);
+  render();
+
+  try {
+    await db('DELETE', `moveis?id=eq.${id}`, null);
+    toast('Item removido.');
+  } catch(e) {
+    toast('Erro ao remover item.', 'err');
+    console.error(e);
+  }
+}
+
+function toggleRoom(id) {
+  openRooms.has(id) ? openRooms.delete(id) : openRooms.add(id);
+  render();
+}
+
+function quickAdd(roomId) {
+  document.getElementById('iRoom').value = roomId;
+  if (!document.getElementById('addForm').classList.contains('open')) toggleForm();
+  document.getElementById('iName').focus();
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+const fmtK = n => n >= 1000 ? `R$${(n/1000).toFixed(1).replace('.',',')}k` : `R$${Math.round(n)}`;
+const fmtFull = n => n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+const SL = { tem:'Tem', falta:'Falta', orcamento:'Orçamento', comprado:'Comprado' };
+const SN = { falta:'→ orç.', orcamento:'→ comprado', comprado:'→ tem', tem:'→ falta' };
+
+function render() {
+  const total = items.length;
+  const tem   = items.filter(i=>i.status==='tem').length;
+  const falta = items.filter(i=>i.status==='falta').length;
+  const orc   = items.filter(i=>i.status==='orcamento').length;
+  const comp  = items.filter(i=>i.status==='comprado').length;
+  const done  = tem + comp;
+  const pct   = total ? Math.round(done/total*100) : 0;
+
+  document.getElementById('overallPct').textContent = pct + '%';
+  document.getElementById('overallBar').style.width = pct + '%';
+  document.getElementById('sTem').textContent  = tem;
+  document.getElementById('sFalta').textContent = falta;
+  document.getElementById('sOrc').textContent  = orc;
+  document.getElementById('sComp').textContent = comp;
+
+  const gasto   = items.reduce((s,i) => s+(parseFloat(i.preco_real)||0), 0);
+  const aGastar = items.filter(i=>i.status!=='tem'&&i.status!=='comprado').reduce((s,i)=>s+(parseFloat(i.preco_estimado)||0),0);
+  document.getElementById('psGasto').textContent  = fmtK(gasto);
+  document.getElementById('psEstim').textContent  = fmtK(aGastar);
+  document.getElementById('psTotal').textContent  = fmtK(gasto + aGastar);
+
+  const sOrd = { falta:0, orcamento:1, comprado:2, tem:3 };
+  let html = '';
+
+  ROOMS.forEach(room => {
+    const ri    = items.filter(i=>i.comodo===room.id);
+    const rDone = ri.filter(i=>i.status==='tem'||i.status==='comprado').length;
+    const rPct  = ri.length ? Math.round(rDone/ri.length*100) : 0;
+    const isOpen = openRooms.has(room.id);
+
+    html += `<div class="room-card">
+      <div class="room-hdr" onclick="toggleRoom('${room.id}')">
+        <div class="room-icon">${room.icon}</div>
+        <div class="room-info">
+          <div class="room-name">${room.name}</div>
+          <div class="room-prog-row">
+            <div class="rbar-out"><div class="rbar-in" style="width:${rPct}%"></div></div>
+            <span class="room-pct">${rPct}%</span>
+          </div>
+        </div>
+        <span class="room-cnt">${rDone}/${ri.length}</span>
+        <span class="room-chev ${isOpen?'open':''}">▼</span>
+      </div>
+      <div class="room-body ${isOpen?'open':''}">`;
+
+    if (!ri.length) {
+      html += `<div class="room-empty">Nenhum item ainda.</div>`;
+    } else {
+      const sorted = [...ri].sort((a,b) => {
+        if (a.prioridade==='urgente'&&b.prioridade!=='urgente') return -1;
+        if (b.prioridade==='urgente'&&a.prioridade!=='urgente') return 1;
+        return sOrd[a.status]-sOrd[b.status];
+      });
+
+      sorted.forEach(it => {
+        const pr = parseFloat(it.preco_real)||0;
+        const pe = parseFloat(it.preco_estimado)||0;
+        const priceStr = pr > 0
+          ? `<span class="meta-price">R$ ${fmtFull(pr)} gasto</span>`
+          : pe > 0
+          ? `<span class="meta-price" style="opacity:.65">~R$ ${fmtFull(pe)}</span>`
+          : '';
+        const noteStr = it.observacao ? `<span class="meta-note">${it.observacao}</span>` : '';
+        const linkStr = it.link ? `<a class="meta-link" href="${it.link}" target="_blank">🔗 ver ref.</a>` : '';
+
+        html += `<div class="item-row status-${it.status}">
+          <div class="item-left">
+            <div class="item-name-row">
+              <div class="pri-dot pri-${it.prioridade}"></div>
+              <span class="item-name">${it.nome}</span>
+              <span class="sbadge sbadge-${it.status}">${SL[it.status]}</span>
+            </div>
+            <div class="item-meta">${priceStr}${noteStr}${linkStr}</div>
+          </div>
+          <div class="item-right">
+            <button class="btn-cycle" onclick="cycleStatus('${it.id}')">${SN[it.status]}</button>
+            <button class="btn-del" onclick="del('${it.id}')">✕</button>
+          </div>
+        </div>`;
+      });
+    }
+
+    html += `<div class="room-add-row"><button onclick="quickAdd('${room.id}')">+ adicionar item aqui</button></div>
+      </div></div>`;
+  });
+
+  document.getElementById('roomsEl').innerHTML = html;
+}
+
+// ── COPY & PDF ────────────────────────────────────────────────────────────────
+function copyList() {
+  const sOrd = { falta:0, orcamento:1, comprado:2, tem:3 };
+  let text = '🏠 Móveis da Casa\n' + '='.repeat(28) + '\n\n';
+
+  ROOMS.forEach(room => {
+    const ri = items.filter(i => i.comodo === room.id);
+    if (!ri.length) return;
+    const rDone = ri.filter(i => i.status === 'tem' || i.status === 'comprado').length;
+    text += `${room.icon} ${room.name.toUpperCase()} (${rDone}/${ri.length})\n`;
+    const sorted = [...ri].sort((a,b) => sOrd[a.status] - sOrd[b.status]);
+    sorted.forEach(it => {
+      const status = { falta:'❌', orcamento:'💬', comprado:'✅', tem:'🏠' }[it.status];
+      const pri    = it.prioridade === 'urgente' ? ' 🔴' : '';
+      const pr     = parseFloat(it.preco_real)||0;
+      const pe     = parseFloat(it.preco_estimado)||0;
+      const preco  = pr > 0 ? ` — R$ ${fmtFull(pr)} (gasto)` : pe > 0 ? ` — ~R$ ${fmtFull(pe)}` : '';
+      const nota   = it.observacao ? ` [${it.observacao}]` : '';
+      text += `  ${status}${pri} ${it.nome}${preco}${nota}\n`;
+    });
+    text += '\n';
+  });
+
+  const gasto   = items.reduce((s,i) => s+(parseFloat(i.preco_real)||0), 0);
+  const aGastar = items.filter(i=>i.status!=='tem'&&i.status!=='comprado').reduce((s,i)=>s+(parseFloat(i.preco_estimado)||0),0);
+  text += '='.repeat(28) + '\n';
+  text += `💸 Gasto real:     R$ ${fmtFull(gasto)}\n`;
+  text += `📋 A gastar:       R$ ${fmtFull(aGastar)}\n`;
+  text += `📦 Total previsto: R$ ${fmtFull(gasto + aGastar)}`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = '✓ Copiado!';
+    setTimeout(() => { btn.textContent = '📋 Copiar lista'; }, 2000);
+  });
+}
+
+function exportPDF() {
+  ROOMS.forEach(r => openRooms.add(r.id));
+  render();
+  setTimeout(() => window.print(), 300);
+}
+
+document.getElementById('iName').addEventListener('keydown', e => { if(e.key==='Enter') addItem(); });
+init();
+</script>
+</body>
+</html>
