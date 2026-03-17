@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia da Célula Digital — Apresentação Executiva</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde:       #00703C;
+    --verde-esc:   #004D2A;
+    --verde-claro: #E8F5EE;
+    --verde-mid:   #00A65A;
+    --amarelo:     #F6A623;
+    --cinza-esc:   #1A1A2E;
+    --cinza-med:   #4A5568;
+    --cinza-lin:   #E2E8F0;
+    --branco:      #FFFFFF;
+    --off-white:   #F8FAF9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0d1117;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ── DECK CONTAINER ───────────────────────────────────── */
+  #deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateX(40px);
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+  }
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  /* ── NAVIGATION ───────────────────────────────────────── */
+  #nav {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.15); }
+  #slide-counter {
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 42px;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  #progress-dots {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dot.active {
+    background: var(--amarelo);
+    width: 18px;
+    border-radius: 3px;
+  }
+
+  /* ── KEYBOARD HINT ────────────────────────────────────── */
+  #hint {
+    position: fixed;
+    top: 18px;
+    right: 24px;
+    color: rgba(255,255,255,0.35);
+    font-size: 11px;
+    z-index: 1000;
+    letter-spacing: 0.05em;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     SLIDE 1 — CAPA
+  ══════════════════════════════════════════════════════ */
+  #s1 {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    background: var(--branco);
+  }
+  .s1-left {
+    background: var(--verde-esc);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 44px 40px;
+  }
+  .s1-left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 80%, rgba(0,160,90,0.3) 0%, transparent 60%);
+  }
+  .s1-geo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .s1-geo span {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    animation: pulse-geo 4s ease-in-out infinite;
+  }
+  .s1-geo span:nth-child(1) { width: 300px; height: 300px; top: -80px; left: -80px; animation-delay: 0s; }
+  .s1-geo span:nth-child(2) { width: 200px; height: 200px; top: 50%; left: 10%; animation-delay: 1.2s; }
+  .s1-geo span:nth-child(3) { width: 150px; height: 150px; bottom: 40px; right: 20px; animation-delay: 0.6s; }
+  @keyframes pulse-geo {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+  .s1-brand {
+    position: relative;
+    z-index: 2;
+  }
+  .s1-brand-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--amarelo);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .s1-brand-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .s1-title-block {
+    position: relative;
+    z-index: 2;
+  }
+  .s1-title-block h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(38px, 5vw, 60px);
+    color: var(--branco);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .s1-title-block h1 em {
+    font-style: italic;
+    color: var(--amarelo);
+  }
+  .s1-accent {
+    width: 40px; height: 3px;
+    background: var(--amarelo);
+    margin: 18px 0;
+    border-radius: 2px;
+  }
+  .s1-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+  .pill {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .pill-green { background: rgba(0,160,90,0.3); color: #6EE7B7; border: 1px solid rgba(110,231,183,0.3); }
+  .pill-yellow { background: rgba(246,166,35,0.2); color: var(--amarelo); border: 1px solid rgba(246,166,35,0.3); }
+  .pill-white { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.15); }
+
+  .s1-right {
+    background: var(--off-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px 52px;
+    position: relative;
+  }
+  .s1-right::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--amarelo), var(--verde));
+  }
+  .s1-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--verde);
+    margin-bottom: 24px;
+  }
+  .s1-right h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(18px, 2.2vw, 26px);
+    color: var(--cinza-esc);
+    line-height: 1.4;
+    margin-bottom: 32px;
+  }
+  .s1-right h2 strong { color: var(--verde); }
+  .s1-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--cinza-lin);
+    margin: 28px 0;
+  }
+  .s1-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+  .s1-meta-item label {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cinza-med);
+    margin-bottom: 4px;
+  }
+  .s1-meta-item span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cinza-esc);
+  }
+  .s1-audience {
+    background: var(--verde-claro);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border-left: 3px solid var(--verde);
+  }
+  .s1-audience label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--verde);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .s1-audience-list {
+    display: flex;
+    gap: 8px;
+  }
+  .aud-badge {
+    background: var(--verde);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .s1-slide-num {
+    position: absolute;
+    top: 28px; right: 32px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--cinza-med);
+    letter-spacing: 0.1em;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     SLIDES 2–15 — BASE LAYOUT
+  ══════════════════════════════════════════════════════ */
+  .slide-base {
+    background: var(--off-white);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+  .slide-header {
+    background: var(--verde-esc);
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .slide-header-brand {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .slide-header-brand strong {
+    color: var(--amarelo);
+  }
+  .slide-num-badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.1em;
+  }
+  .slide-body {
+    flex: 1;
+    overflow: hidden;
+    padding: 36px 48px 18px;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 2.8vw, 34px);
+    color: var(--cinza-esc);
+    margin-bottom: 6px;
+    line-height: 1.15;
+  }
+  .slide-title-accent {
+    width: 36px; height: 3px;
+    background: var(--verde);
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .slide-subtitle {
+    font-size: 13px;
+    color: var(--cinza-med);
+    margin-bottom: 22px;
+  }
+  .slide-footer {
+    background: white;
+    border-top: 2px solid var(--verde);
+    padding: 8px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .slide-footer-left { font-size: 10px; color: var(--cinza-med); }
+  .slide-footer-right { font-size: 10px; color: var(--cinza-med); font-weight: 600; }
+
+  /* ── CONTENT COMPONENTS ─────────────────────────────── */
+
+  /* Numbered list */
+  .obj-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .obj-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border-radius: 10px;
+    padding: 12px 18px;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+  .obj-item:hover { border-left-color: var(--verde); box-shadow: 0 4px 20px rgba(0,112,60,0.08); }
+  .obj-num {
+    min-width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--verde);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .obj-text strong { display: block; font-size: 13px; font-weight: 700; color: var(--cinza-esc); }
+  .obj-text span { font-size: 11.5px; color: var(--cinza-med); }
+
+  /* Feature cards grid */
+  .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; flex: 1; }
+  .feat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid var(--cinza-lin);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+  .feat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,112,60,0.1); }
+  .feat-icon { font-size: 22px; }
+  .feat-title { font-size: 13px; font-weight: 700; color: var(--cinza-esc); }
+  .feat-desc { font-size: 11px; color: var(--cinza-med); line-height: 1.5; }
+  .feat-badge {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--verde-claro);
+    color: var(--verde);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    width: fit-content;
+  }
+
+  /* Comparison table */
+  .comp-table { width: 100%; border-collapse: separate; border-spacing: 0; flex: 1; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+  .comp-table thead tr th {
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .comp-table thead th:first-child { background: var(--cinza-esc); color: white; }
+  .comp-table thead th:last-child  { background: var(--verde); color: white; }
+  .comp-table tbody tr td { padding: 11px 20px; font-size: 12.5px; background: white; border-bottom: 1px solid var(--cinza-lin); }
+  .comp-table tbody tr:last-child td { border-bottom: none; }
+  .comp-table tbody tr:nth-child(even) td { background: var(--off-white); }
+  .before-val { color: #C0392B; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+  .after-val  { color: var(--verde-esc); display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .x-icon { font-size: 14px; }
+  .check-icon { font-size: 14px; }
+
+  /* Security slide */
+  #s5 .slide-body {
+    background: var(--verde-esc);
+    padding: 36px 48px 18px;
+  }
+  #s5 .slide-title, #s5 .slide-subtitle { color: white; }
+  #s5 .slide-title-accent { background: var(--amarelo); }
+  .sec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; }
+  .sec-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: background 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+  .sec-item:hover { background: rgba(255,255,255,0.08); }
+  .sec-check {
+    width: 28px; height: 28px; min-width: 28px;
+    background: rgba(0,166,90,0.3);
+    border: 1px solid rgba(0,166,90,0.5);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #6EE7B7;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .sec-text { font-size: 12.5px; color: rgba(255,255,255,0.85); font-weight: 500; }
+  .sec-stamp {
+    background: var(--amarelo);
+    border-radius: 10px;
+    padding: 12px 20px;
+    text-align: center;
+    margin-top: 12px;
+  }
+  .sec-stamp span { font-size: 12px; font-weight: 700; color: var(--cinza-esc); letter-spacing: 0.05em; }
+  #s5 .slide-footer { background: var(--verde-esc); border-top-color: var(--amarelo); }
+  #s5 .slide-footer .slide-footer-left,
+  #s5 .slide-footer .slide-footer-right { color: rgba(255,255,255,0.4); }
+
+  /* Atendimento list */
+  .atend-list { display: flex; flex-direction: column; gap: 9px; flex: 1; }
+  .atend-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    border-radius: 10px;
+    padding: 11px 18px;
+    animation: fadeUp 0.4s ease both;
+    transition: box-shadow 0.2s;
+  }
+  .atend-item:hover { box-shadow: 0 4px 18px rgba(0,112,60,0.1); }
+  .atend-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--verde);
+    min-width: 26px;
+  }
+  .atend-title { font-size: 13px; font-weight: 700; color: var(--cinza-esc); min-width: 160px; }
+  .atend-sep { width: 1px; height: 24px; background: var(--cinza-lin); }
+  .atend-desc { font-size: 11.5px; color: var(--cinza-med); }
+
+  /* Profile cards */
+  .profile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; flex: 1; }
+  .profile-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    animation: fadeUp 0.4s ease both;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .profile-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,112,60,0.12); }
+  .profile-header {
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .profile-abbr {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+  }
+  .profile-name strong { display: block; font-size: 14px; font-weight: 700; color: var(--cinza-esc); }
+  .profile-name span { font-size: 11px; color: var(--cinza-med); }
+  .profile-products { padding: 0 18px 18px; flex: 1; }
+  .profile-products h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cinza-med); margin-bottom: 8px; }
+  .prod-tag {
+    display: inline-block;
+    background: var(--verde-claro);
+    color: var(--verde-esc);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin: 2px;
+  }
+  .profile-footer {
+    padding: 10px 18px;
+    border-top: 1px solid var(--cinza-lin);
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--verde);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Flow steps */
+  .flow-steps { display: flex; align-items: center; gap: 0; flex: 0 0 auto; margin-bottom: 20px; }
+  .flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    position: relative;
+  }
+  .flow-step::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 14px;
+    font-size: 18px;
+    color: var(--verde);
+    font-weight: 300;
+  }
+  .flow-step:last-child::after { display: none; }
+  .flow-circle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--verde);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 14px rgba(0,112,60,0.3);
+  }
+  .flow-label { font-size: 11px; font-weight: 600; color: var(--cinza-esc); line-height: 1.3; }
+
+  /* Hub items */
+  .hub-list { display: flex; flex-direction: column; gap: 0; flex: 1; }
+  .hub-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--cinza-lin);
+    animation: fadeUp 0.4s ease both;
+    background: white;
+    border-radius: 0;
+    transition: background 0.15s;
+  }
+  .hub-item:first-child { border-radius: 10px 10px 0 0; }
+  .hub-item:last-child  { border-radius: 0 0 10px 10px; border-bottom: none; }
+  .hub-item:hover { background: var(--verde-claro); }
+  .hub-dot {
+    width: 10px; height: 10px; min-width: 10px;
+    border-radius: 50%;
+    background: var(--verde);
+  }
+  .hub-title { font-size: 13px; font-weight: 700; color: var(--cinza-esc); min-width: 180px; }
+  .hub-sep { width: 1px; height: 20px; background: var(--cinza-lin); }
+  .hub-desc { font-size: 12px; color: var(--cinza-med); }
+
+  /* Calendar week */
+  .week-row { display: flex; gap: 8px; margin-bottom: 18px; }
+  .day-card {
+    flex: 1;
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+  }
+  .day-card.work { background: var(--verde); }
+  .day-card.friday { background: var(--amarelo); color: var(--cinza-esc); }
+  .day-card .day-abbr { font-size: 14px; font-weight: 800; }
+  .day-card .day-full { font-size: 9px; font-weight: 500; opacity: 0.8; margin-top: 2px; }
+  .week-desc { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .week-block {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    border-left: 3px solid var(--cinza-lin);
+  }
+  .week-block.green { border-left-color: var(--verde); }
+  .week-block.yellow { border-left-color: var(--amarelo); }
+  .week-block h4 { font-size: 12px; font-weight: 700; color: var(--cinza-esc); margin-bottom: 8px; }
+  .week-block ul { list-style: none; }
+  .week-block ul li {
+    font-size: 11.5px;
+    color: var(--cinza-med);
+    padding: 3px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .week-block ul li::before { content: '•'; color: var(--verde); font-size: 14px; }
+  .week-block.yellow ul li::before { color: var(--amarelo); }
+
+  /* Merge flow */
+  .merge-flow { display: flex; align-items: stretch; gap: 8px; flex: 1; }
+  .merge-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: fadeUp 0.4s ease both;
+  }
+  .merge-top {
+    background: var(--verde);
+    border-radius: 10px 10px 0 0;
+    padding: 14px 10px;
+    text-align: center;
+    color: white;
+  }
+  .merge-top .m-num { font-size: 20px; font-weight: 800; opacity: 0.5; }
+  .merge-top .m-title { font-size: 11px; font-weight: 700; line-height: 1.3; }
+  .merge-bot {
+    background: white;
+    border-radius: 0 0 10px 10px;
+    padding: 10px;
+    font-size: 10.5px;
+    color: var(--cinza-med);
+    line-height: 1.5;
+    text-align: center;
+    flex: 1;
+  }
+  .merge-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--verde);
+    padding-top: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Benefits two columns */
+  .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
+  .benefit-item {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    animation: fadeUp 0.4s ease both;
+    transition: box-shadow 0.2s;
+  }
+  .benefit-item:hover { box-shadow: 0 4px 18px rgba(0,112,60,0.1); }
+  .benefit-check {
+    width: 24px; height: 24px; min-width: 24px;
+    border-radius: 50%;
+    background: var(--verde-claro);
+    color: var(--verde);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .benefit-title { font-size: 13px; font-weight: 700; color: var(--cinza-esc); margin-bottom: 2px; }
+  .benefit-desc  { font-size: 11px; color: var(--cinza-med); line-height: 1.4; }
+
+  /* Management table */
+  .mgmt-table { width: 100%; border-collapse: separate; border-spacing: 0; flex: 1; border-radius: 12px; overflow: hidden; }
+  .mgmt-table tr td { padding: 10px 18px; font-size: 12.5px; background: white; border-bottom: 1px solid var(--cinza-lin); }
+  .mgmt-table tr:last-child td { border-bottom: none; }
+  .mgmt-table tr:nth-child(even) td { background: var(--off-white); }
+  .mgmt-table td:first-child { font-weight: 700; color: var(--cinza-esc); width: 38%; }
+  .mgmt-table td:last-child  { color: var(--cinza-med); }
+  .mgmt-table td .check { color: var(--verde); font-weight: 700; margin-right: 8px; }
+
+  /* Conclusion slide */
+  #s15 {
+    background: var(--verde-esc);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+  .s15-geo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .s15-geo::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,160,90,0.2) 0%, transparent 70%);
+    top: -200px; right: -100px;
+  }
+  .s15-geo::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(246,166,35,0.1) 0%, transparent 70%);
+    bottom: -100px; left: 100px;
+  }
+  .s15-left {
+    padding: 52px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .s15-tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amarelo);
+    margin-bottom: 16px;
+  }
+  .s15-left h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(26px, 3.2vw, 40px);
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .s15-left h2 em { font-style: italic; color: var(--amarelo); }
+  .s15-sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+  .s15-line { width: 40px; height: 3px; background: var(--amarelo); border-radius: 2px; margin-bottom: 28px; }
+  .s15-points { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .s15-points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.4;
+  }
+  .s15-points li::before {
+    content: '▸';
+    color: var(--amarelo);
+    font-size: 12px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .s15-right {
+    padding: 52px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+    border-left: 1px solid rgba(255,255,255,0.08);
+  }
+  .s15-stat {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 18px 20px;
+    transition: background 0.2s;
+  }
+  .s15-stat:hover { background: rgba(255,255,255,0.09); }
+  .s15-stat .stat-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--amarelo);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .s15-stat .stat-label { font-size: 12px; color: rgba(255,255,255,0.6); }
+  .s15-cta {
+    background: var(--amarelo);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    margin-top: 8px;
+  }
+  .s15-cta strong { display: block; font-size: 14px; font-weight: 800; color: var(--cinza-esc); margin-bottom: 4px; }
+  .s15-cta span { font-size: 11px; color: rgba(26,26,46,0.7); }
+  .s15-footer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 10px 44px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 3;
+  }
+  .s15-footer span { font-size: 10px; color: rgba(255,255,255,0.3); }
+
+  /* ── ANIMATIONS ─────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .slide.active .obj-item,
+  .slide.active .feat-card,
+  .slide.active .sec-item,
+  .slide.active .atend-item,
+  .slide.active .profile-card,
+  .slide.active .hub-item,
+  .slide.active .benefit-item,
+  .slide.active .merge-step {
+    animation: fadeUp 0.4s ease both;
+  }
+  .slide.active .obj-item:nth-child(1)   { animation-delay: 0.05s; }
+  .slide.active .obj-item:nth-child(2)   { animation-delay: 0.10s; }
+  .slide.active .obj-item:nth-child(3)   { animation-delay: 0.15s; }
+  .slide.active .obj-item:nth-child(4)   { animation-delay: 0.20s; }
+  .slide.active .obj-item:nth-child(5)   { animation-delay: 0.25s; }
+  .slide.active .feat-card:nth-child(1)  { animation-delay: 0.05s; }
+  .slide.active .feat-card:nth-child(2)  { animation-delay: 0.10s; }
+  .slide.active .feat-card:nth-child(3)  { animation-delay: 0.15s; }
+  .slide.active .feat-card:nth-child(4)  { animation-delay: 0.20s; }
+  .slide.active .feat-card:nth-child(5)  { animation-delay: 0.25s; }
+  .slide.active .feat-card:nth-child(6)  { animation-delay: 0.30s; }
+  .slide.active .sec-item:nth-child(n)   { animation-delay: calc(var(--i, 0) * 0.07s); }
+  .slide.active .atend-item:nth-child(1) { animation-delay: 0.04s; }
+  .slide.active .atend-item:nth-child(2) { animation-delay: 0.08s; }
+  .slide.active .atend-item:nth-child(3) { animation-delay: 0.12s; }
+  .slide.active .atend-item:nth-child(4) { animation-delay: 0.16s; }
+  .slide.active .atend-item:nth-child(5) { animation-delay: 0.20s; }
+  .slide.active .atend-item:nth-child(6) { animation-delay: 0.24s; }
+  .slide.active .hub-item:nth-child(1)  { animation-delay: 0.04s; }
+  .slide.active .hub-item:nth-child(2)  { animation-delay: 0.09s; }
+  .slide.active .hub-item:nth-child(3)  { animation-delay: 0.14s; }
+  .slide.active .hub-item:nth-child(4)  { animation-delay: 0.19s; }
+  .slide.active .hub-item:nth-child(5)  { animation-delay: 0.24s; }
+  .slide.active .benefit-item:nth-child(1) { animation-delay: 0.04s; }
+  .slide.active .benefit-item:nth-child(2) { animation-delay: 0.08s; }
+  .slide.active .benefit-item:nth-child(3) { animation-delay: 0.12s; }
+  .slide.active .benefit-item:nth-child(4) { animation-delay: 0.16s; }
+  .slide.active .benefit-item:nth-child(5) { animation-delay: 0.20s; }
+  .slide.active .benefit-item:nth-child(6) { animation-delay: 0.24s; }
+  .slide.active .merge-step:nth-child(odd) { animation-delay: calc(var(--mi) * 0.08s); }
+</style>
+</head>
+<body>
+
+<div id="hint">← → ou clique para navegar</div>
+
+<div id="deck">
+
+<!-- ══════════════════════════════════════
+  SLIDE 1 — CAPA
+══════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="s1-left">
+    <div class="s1-geo">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="s1-brand">
+      <div class="s1-brand-label">Sicredi</div>
+      <div class="s1-brand-sub">Cooperativa de Crédito</div>
+    </div>
+    <div class="s1-title-block">
+      <h1>Guia da<br><em>Célula</em><br>Digital</h1>
+      <div class="s1-accent"></div>
+      <div class="s1-pills">
+        <span class="pill pill-green">Eficiência</span>
+        <span class="pill pill-yellow">Segurança</span>
+        <span class="pill pill-white">Evolução</span>
+      </div>
+    </div>
+    <div></div>
+  </div>
+  <div class="s1-right">
+    <span class="s1-slide-num">01 / 15</span>
+    <div class="s1-tag">Apresentação Executiva</div>
+    <h2>Padronização Comercial,<br><strong>Segurança da Informação</strong><br>e Evolução da Equipe</h2>
+    <div class="s1-divider"></div>
+    <div class="s1-meta">
+      <div class="s1-meta-item">
+        <label>Unidade</label>
+        <span>Célula Digital · Natal, RN</span>
+      </div>
+      <div class="s1-meta-item">
+        <label>Classificação</label>
+        <span>Uso Interno</span>
+      </div>
+      <div class="s1-meta-item">
+        <label>Ano</label>
+        <span>2025</span>
+      </div>
+      <div class="s1-meta-item">
+        <label>Versão</label>
+        <span>1.0</span>
+      </div>
+    </div>
+    <div class="s1-audience">
+      <label>Público-alvo</label>
+      <div class="s1-audience-list">
+        <span class="aud-badge">Diretoria &amp; Gerência</span>
+        <span class="aud-badge">Assistentes de Negócios</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 2 — PROBLEMA ATUAL
+══════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">02 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">O Problema Atual</h2>
+      <div class="slide-title-accent"></div>
+      <p class="slide-subtitle">Como a equipe gerencia o conhecimento hoje:</p>
+      <div class="obj-list">
+        <div class="obj-item">
+          <div class="obj-num" style="background:#C0392B">!</div>
+          <div class="obj-text"><strong>Cadernos e arquivos Word</strong><span>Informações fora de sistema, sem controle de versão</span></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num" style="background:#C0392B">!</div>
+          <div class="obj-text"><strong>Falta de padronização</strong><span>Cada assistente atende de forma completamente diferente</span></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num" style="background:#C0392B">!</div>
+          <div class="obj-text"><strong>Dificuldade para treinar novos colaboradores</strong><span>Integração lenta, dependente de um único colega</span></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num" style="background:#C0392B">!</div>
+          <div class="obj-text"><strong>Informação espalhada</strong><span>WhatsApp, e-mail, caderno — ninguém sabe onde está o quê</span></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num" style="background:#C0392B">!</div>
+          <div class="obj-text"><strong>Risco de perda de conhecimento</strong><span>Colaborador sai, leva consigo anos de aprendizado</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 3 — OBJETIVO
+══════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">03 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Objetivo da Iniciativa</h2>
+      <div class="slide-title-accent"></div>
+      <div class="obj-list">
+        <div class="obj-item">
+          <div class="obj-num">01</div>
+          <div class="obj-text"><strong>Guia único digital</strong><span>Centralizar todo o conhecimento comercial em um único lugar</span></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num">02</div>
+          <div class="obj-text"><strong>Padronização da abordagem</strong><span>Unificar a forma de atender clientes em toda a equipe</span></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num">03</div>
+          <div class="obj-text"><strong>Eficiência no atendimento</strong><span>Reduzir tempo de resposta e aumentar taxa de conversão</span></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num">04</div>
+          <div class="obj-text"><strong>Segurança da informação</strong><span>Garantir conformidade total com as políticas de TI do Sicredi</span></div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-num">05</div>
+          <div class="obj-text"><strong>Evolução contínua da equipe</strong><span>Permitir atualização semanal coletiva das melhores práticas</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 4 — O QUE É O GUIA
+══════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">04 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">O que é o Guia da Célula Digital?</h2>
+      <div class="slide-title-accent"></div>
+      <p class="slide-subtitle">Uma solução simples, segura e eficaz para o dia a dia:</p>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="feat-icon">📄</div>
+          <div class="feat-title">Arquivo HTML único</div>
+          <div class="feat-desc">Um único arquivo que contém toda a ferramenta. Fácil de copiar e distribuir.</div>
+          <div class="feat-badge">✓ Simples</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🔌</div>
+          <div class="feat-title">Funciona offline</div>
+          <div class="feat-desc">Não precisa de internet para operar. Funciona em qualquer rede.</div>
+          <div class="feat-badge">✓ Independente</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🌐</div>
+          <div class="feat-title">Roda no navegador</div>
+          <div class="feat-desc">Abre em qualquer browser. Sem instalação, sem permissão especial.</div>
+          <div class="feat-badge">✓ Universal</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🛡️</div>
+          <div class="feat-title">Sem banco de dados</div>
+          <div class="feat-desc">Nenhum dado é armazenado em servidor externo. Zero exposição.</div>
+          <div class="feat-badge">✓ Seguro</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">☁️</div>
+          <div class="feat-title">Sem nuvem</div>
+          <div class="feat-desc">Não depende de nenhum serviço externo. 100% local.</div>
+          <div class="feat-badge">✓ Privado</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🔒</div>
+          <div class="feat-title">Compatível com TI</div>
+          <div class="feat-desc">Seguro para o ambiente bancário do Sicredi. Zero risco de conformidade.</div>
+          <div class="feat-badge">✓ Aprovado</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 5 — SEGURANÇA
+══════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="slide-base" style="background: var(--verde-esc);">
+    <div class="slide-header" style="background: rgba(0,0,0,0.3);">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">05 / 15</div>
+    </div>
+    <div class="slide-body" style="background: var(--verde-esc);">
+      <h2 class="slide-title" style="color: white;">Segurança da Informação</h2>
+      <div class="slide-title-accent" style="background: var(--amarelo);"></div>
+      <p class="slide-subtitle" style="color: rgba(255,255,255,0.6);">Total conformidade com as políticas de TI do Sicredi:</p>
+      <div class="sec-grid">
+        <div class="sec-item" style="--i:1">
+          <div class="sec-check">✓</div>
+          <span class="sec-text">Não envia dados para a internet</span>
+        </div>
+        <div class="sec-item" style="--i:2">
+          <div class="sec-check">✓</div>
+          <span class="sec-text">Não salva em servidor externo</span>
+        </div>
+        <div class="sec-item" style="--i:3">
+          <div class="sec-check">✓</div>
+          <span class="sec-text">Não utiliza serviços de nuvem</span>
+        </div>
+        <div class="sec-item" style="--i:4">
+          <div class="sec-check">✓</div>
+          <span class="sec-text">Não armazena dados sensíveis de clientes</span>
+        </div>
+        <div class="sec-item" style="--i:5">
+          <div class="sec-check">✓</div>
+          <span class="sec-text">Arquivo local no dispositivo do colaborador</span>
+        </div>
+        <div class="sec-item" style="--i:6">
+          <div class="sec-check">✓</div>
+          <span class="sec-text">Zero dependência de sistemas terceiros</span>
+        </div>
+      </div>
+      <div class="sec-stamp">
+        <span>★ &nbsp; APROVADO PARA USO INTERNO &nbsp; ★</span>
+      </div>
+    </div>
+    <div class="slide-footer" style="background: rgba(0,0,0,0.3); border-top-color: var(--amarelo);">
+      <span class="slide-footer-left" style="color: rgba(255,255,255,0.4);">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right" style="color: rgba(255,255,255,0.4);">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 6 — ANTES × DEPOIS
+══════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">06 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Antes × Depois</h2>
+      <div class="slide-title-accent"></div>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Antes</th>
+            <th>Depois</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="before-val"><span class="x-icon">✗</span> Caderno / Word</span></td>
+            <td><span class="after-val"><span class="check-icon">✓</span> Guia Digital HTML</span></td>
+          </tr>
+          <tr>
+            <td><span class="before-val"><span class="x-icon">✗</span> Anotações soltas</span></td>
+            <td><span class="after-val"><span class="check-icon">✓</span> Padronizado e estruturado</span></td>
+          </tr>
+          <tr>
+            <td><span class="before-val"><span class="x-icon">✗</span> Conhecimento individual</span></td>
+            <td><span class="after-val"><span class="check-icon">✓</span> Conhecimento coletivo</span></td>
+          </tr>
+          <tr>
+            <td><span class="before-val"><span class="x-icon">✗</span> Difícil atualizar</span></td>
+            <td><span class="after-val"><span class="check-icon">✓</span> Atualização rápida semanal</span></td>
+          </tr>
+          <tr>
+            <td><span class="before-val"><span class="x-icon">✗</span> Risco de perda</span></td>
+            <td><span class="after-val"><span class="check-icon">✓</span> Seguro e distribuído</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 7 — COMO AJUDA NO ATENDIMENTO
+══════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">07 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Como o Guia Potencializa o Atendimento</h2>
+      <div class="slide-title-accent"></div>
+      <div class="atend-list">
+        <div class="atend-item">
+          <span class="atend-num">01</span>
+          <span class="atend-title">Roteiro de prospecção</span>
+          <div class="atend-sep"></div>
+          <span class="atend-desc">Estrutura clara para abordar novos clientes com segurança</span>
+        </div>
+        <div class="atend-item">
+          <span class="atend-num">02</span>
+          <span class="atend-title">Perguntas SPIN</span>
+          <div class="atend-sep"></div>
+          <span class="atend-desc">Técnica profissional para diagnosticar necessidades reais</span>
+        </div>
+        <div class="atend-item">
+          <span class="atend-num">03</span>
+          <span class="atend-title">Sugestões por perfil</span>
+          <div class="atend-sep"></div>
+          <span class="atend-desc">Abordagem customizada para PF1, PF2 e MEI</span>
+        </div>
+        <div class="atend-item">
+          <span class="atend-num">04</span>
+          <span class="atend-title">Respostas a objeções</span>
+          <div class="atend-sep"></div>
+          <span class="atend-desc">Argumentários prontos para as situações de maior resistência</span>
+        </div>
+        <div class="atend-item">
+          <span class="atend-num">05</span>
+          <span class="atend-title">Ofertas consultivas</span>
+          <div class="atend-sep"></div>
+          <span class="atend-desc">Produtos indicados por perfil e momento de vida</span>
+        </div>
+        <div class="atend-item">
+          <span class="atend-num">06</span>
+          <span class="atend-title">Registro de práticas</span>
+          <div class="atend-sep"></div>
+          <span class="atend-desc">Aprenda com o que já funcionou na própria equipe</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 8 — PERFIS SPIN
+══════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">08 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Perfis SPIN Disponíveis</h2>
+      <div class="slide-title-accent"></div>
+      <p class="slide-subtitle">Roteiros estruturados para cada perfil de cliente:</p>
+      <div class="profile-grid">
+        <div class="profile-card">
+          <div class="profile-header" style="background: var(--verde-claro);">
+            <div class="profile-abbr" style="background: var(--verde);">PF1</div>
+            <div class="profile-name">
+              <strong>Pessoa Física 1</strong>
+              <span>Perfil Conservador</span>
+            </div>
+          </div>
+          <div class="profile-products">
+            <h4>Produtos-foco</h4>
+            <span class="prod-tag">Conta corrente</span>
+            <span class="prod-tag">Poupança</span>
+            <span class="prod-tag">Crédito pessoal</span>
+            <span class="prod-tag">Consórcio</span>
+          </div>
+          <div class="profile-footer">Perguntas SPIN incluídas</div>
+        </div>
+        <div class="profile-card">
+          <div class="profile-header" style="background: #EEF2FF;">
+            <div class="profile-abbr" style="background: var(--cinza-esc);">PF2</div>
+            <div class="profile-name">
+              <strong>Pessoa Física 2</strong>
+              <span>Perfil Investidor</span>
+            </div>
+          </div>
+          <div class="profile-products">
+            <h4>Produtos-foco</h4>
+            <span class="prod-tag">Investimentos</span>
+            <span class="prod-tag">Previdência</span>
+            <span class="prod-tag">Seguros</span>
+            <span class="prod-tag">Capital de giro</span>
+          </div>
+          <div class="profile-footer">Perguntas SPIN incluídas</div>
+        </div>
+        <div class="profile-card">
+          <div class="profile-header" style="background: #FFF8E7;">
+            <div class="profile-abbr" style="background: var(--amarelo);">MEI</div>
+            <div class="profile-name">
+              <strong>MEI</strong>
+              <span>Microempresário Individual</span>
+            </div>
+          </div>
+          <div class="profile-products">
+            <h4>Produtos-foco</h4>
+            <span class="prod-tag">Conta empresa</span>
+            <span class="prod-tag">Crédito PJ</span>
+            <span class="prod-tag">Maquininha</span>
+            <span class="prod-tag">Capital de giro</span>
+          </div>
+          <div class="profile-footer">Perguntas SPIN incluídas</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 9 — USO NO DIA A DIA
+══════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">09 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Uso no Dia a Dia</h2>
+      <div class="slide-title-accent"></div>
+      <p class="slide-subtitle">Fluxo de uso durante o atendimento:</p>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-circle">1</div>
+          <div class="flow-label">Abrir<br>o Guia</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-circle">2</div>
+          <div class="flow-label">Selecionar<br>Produto</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-circle">3</div>
+          <div class="flow-label">Selecionar<br>Perfil</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-circle">4</div>
+          <div class="flow-label">Seguir<br>Roteiro</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-circle">5</div>
+          <div class="flow-label">Registrar<br>o Resultado</div>
+        </div>
+      </div>
+      <div style="background: var(--verde-claro); border-radius: 12px; padding: 18px 22px; border-left: 3px solid var(--verde);">
+        <div style="font-size: 12px; font-weight: 700; color: var(--verde); margin-bottom: 8px;">💡 Dica Prática</div>
+        <div style="font-size: 12.5px; color: var(--cinza-med); line-height: 1.6;">
+          Mantenha o guia aberto durante ligações e reuniões. Use os roteiros como guia de conversa — não como script rígido. Adapte ao cliente, registre o que funcionou.
+        </div>
+      </div>
+      <div style="background: white; border-radius: 12px; padding: 16px 22px; margin-top: 12px; display: flex; gap: 28px;">
+        <div>
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cinza-med); margin-bottom: 4px;">Tempo médio de consulta</div>
+          <div style="font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--verde);">30 seg</div>
+        </div>
+        <div style="width: 1px; background: var(--cinza-lin);"></div>
+        <div>
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cinza-med); margin-bottom: 4px;">Instalação necessária</div>
+          <div style="font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--verde);">Zero</div>
+        </div>
+        <div style="width: 1px; background: var(--cinza-lin);"></div>
+        <div>
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cinza-med); margin-bottom: 4px;">Perfis cobertos</div>
+          <div style="font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--verde);">PF1, PF2, MEI</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 10 — MODELO HUB
+══════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">10 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Modelo HUB da Equipe</h2>
+      <div class="slide-title-accent"></div>
+      <p class="slide-subtitle">Cada colaborador contribui para o conhecimento coletivo:</p>
+      <div class="hub-list">
+        <div class="hub-item">
+          <div class="hub-dot"></div>
+          <span class="hub-title">Scripts que funcionaram</span>
+          <div class="hub-sep"></div>
+          <span class="hub-desc">Abordagens testadas e aprovadas pela equipe</span>
+        </div>
+        <div class="hub-item">
+          <div class="hub-dot"></div>
+          <span class="hub-title">Objeções contornadas</span>
+          <div class="hub-sep"></div>
+          <span class="hub-desc">Situações reais com respostas eficazes documentadas</span>
+        </div>
+        <div class="hub-item">
+          <div class="hub-dot"></div>
+          <span class="hub-title">Resultados registrados</span>
+          <div class="hub-sep"></div>
+          <span class="hub-desc">Métricas e aprendizados por produto e perfil</span>
+        </div>
+        <div class="hub-item">
+          <div class="hub-dot"></div>
+          <span class="hub-title">Práticas por perfil</span>
+          <div class="hub-sep"></div>
+          <span class="hub-desc">Táticas específicas testadas para PF1, PF2 e MEI</span>
+        </div>
+        <div class="hub-item">
+          <div class="hub-dot"></div>
+          <span class="hub-title">Tudo salvo no próprio guia</span>
+          <div class="hub-sep"></div>
+          <span class="hub-desc">Sem sistemas extras, sem login, sem complicação</span>
+        </div>
+      </div>
+      <div style="background: var(--verde-esc); border-radius: 10px; padding: 14px 20px; margin-top: 12px; text-align: center;">
+        <span style="font-size: 13px; font-weight: 600; color: white;">O guia cresce com a equipe. Cada semana, mais completo.</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 11 — RITUAL SEMANAL
+══════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">11 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Ritual Semanal da Equipe</h2>
+      <div class="slide-title-accent"></div>
+      <div class="week-row">
+        <div class="day-card work"><div class="day-abbr">SEG</div><div class="day-full">Segunda</div></div>
+        <div class="day-card work"><div class="day-abbr">TER</div><div class="day-full">Terça</div></div>
+        <div class="day-card work"><div class="day-abbr">QUA</div><div class="day-full">Quarta</div></div>
+        <div class="day-card work"><div class="day-abbr">QUI</div><div class="day-full">Quinta</div></div>
+        <div class="day-card friday"><div class="day-abbr">SEX</div><div class="day-full">Sexta</div></div>
+      </div>
+      <div class="week-desc">
+        <div class="week-block green">
+          <h4>Segunda a Quinta — Usar e Registrar</h4>
+          <ul>
+            <li>Usar o guia em todos os atendimentos</li>
+            <li>Registrar práticas e observações</li>
+            <li>Anotar objeções e respostas eficazes</li>
+          </ul>
+        </div>
+        <div class="week-block yellow">
+          <h4>Sexta-feira — Exportar e Enviar</h4>
+          <ul>
+            <li>Exportar arquivo JSON com registros da semana</li>
+            <li>Enviar para o líder da célula</li>
+            <li>Líder consolida e distribui novo guia</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 12 — COMO FUNCIONA A MESCLA
+══════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">12 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Como Funciona a Mescla Semanal</h2>
+      <div class="slide-title-accent"></div>
+      <div class="merge-flow">
+        <div class="merge-step" style="--mi:1">
+          <div class="merge-top"><div class="m-num">01</div><div class="m-title">Exportar<br>JSON</div></div>
+          <div class="merge-bot">Colaborador exporta registros da semana</div>
+        </div>
+        <div class="merge-arrow">→</div>
+        <div class="merge-step" style="--mi:2">
+          <div class="merge-top"><div class="m-num">02</div><div class="m-title">Enviar<br>ao Líder</div></div>
+          <div class="merge-bot">Arquivo enviado via WhatsApp ou e-mail</div>
+        </div>
+        <div class="merge-arrow">→</div>
+        <div class="merge-step" style="--mi:3">
+          <div class="merge-top"><div class="m-num">03</div><div class="m-title">Importar<br>no Guia</div></div>
+          <div class="merge-bot">Líder importa todos os arquivos recebidos</div>
+        </div>
+        <div class="merge-arrow">→</div>
+        <div class="merge-step" style="--mi:4">
+          <div class="merge-top"><div class="m-num">04</div><div class="m-title">Mescla<br>Automática</div></div>
+          <div class="merge-bot">Sistema consolida automaticamente</div>
+        </div>
+        <div class="merge-arrow">→</div>
+        <div class="merge-step" style="--mi:5">
+          <div class="merge-top" style="background: var(--amarelo);"><div class="m-num" style="color: rgba(0,0,0,0.3);">05</div><div class="m-title" style="color: var(--cinza-esc);">Novo HTML<br>para Equipe</div></div>
+          <div class="merge-bot">Guia atualizado distribuído a todos</div>
+        </div>
+      </div>
+      <div style="background: var(--verde-esc); border-radius: 12px; padding: 16px 22px; margin-top: 12px; text-align: center;">
+        <div style="color: var(--amarelo); font-size: 13px; font-weight: 700; margin-bottom: 4px;">Resultado da semana</div>
+        <div style="color: rgba(255,255,255,0.75); font-size: 12px;">A equipe começa toda semana com o guia mais completo e atualizado · Processo leva menos de 5 minutos · 100% offline</div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 13 — BENEFÍCIOS GERÊNCIA
+══════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">13 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Benefícios para a Gerência</h2>
+      <div class="slide-title-accent"></div>
+      <table class="mgmt-table">
+        <tbody>
+          <tr><td><span class="check">✓</span> Padronização total</td><td>Toda a equipe seguindo o mesmo processo de atendimento</td></tr>
+          <tr><td><span class="check">✓</span> Maior conversão</td><td>Roteiros e argumentários testados aumentam a taxa de fechamento</td></tr>
+          <tr><td><span class="check">✓</span> Treinamento acelerado</td><td>Novos colaboradores produtivos em muito menos tempo</td></tr>
+          <tr><td><span class="check">✓</span> Menos erros</td><td>Processo padronizado reduz falhas e retrabalho no atendimento</td></tr>
+          <tr><td><span class="check">✓</span> Controle do líder</td><td>Visibilidade real sobre práticas e registros da equipe</td></tr>
+          <tr><td><span class="check">✓</span> Sem custo de sistema</td><td>Solução em HTML — sem licenças, servidores ou manutenção</td></tr>
+          <tr><td><span class="check">✓</span> Conformidade com TI</td><td>Zero risco de violação de políticas de segurança da informação</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 14 — BENEFÍCIOS EQUIPE
+══════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="slide-base">
+    <div class="slide-header">
+      <div class="slide-header-brand"><strong>Sicredi</strong> · Célula Digital</div>
+      <div class="slide-num-badge">14 / 15</div>
+    </div>
+    <div class="slide-body">
+      <h2 class="slide-title">Benefícios para a Equipe</h2>
+      <div class="slide-title-accent"></div>
+      <div class="benefits-grid">
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div><div class="benefit-title">Mais segurança na venda</div><div class="benefit-desc">Roteiros e argumentários prontos para cada situação</div></div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div><div class="benefit-title">Mais rapidez</div><div class="benefit-desc">Menos tempo pensando, mais tempo atendendo</div></div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div><div class="benefit-title">Menos esquecimento</div><div class="benefit-desc">Tudo registrado e acessível na hora certa</div></div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div><div class="benefit-title">Suporte em objeções</div><div class="benefit-desc">Respostas prontas para as situações mais difíceis</div></div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div><div class="benefit-title">Ajuda na prospecção</div><div class="benefit-desc">Scripts testados para abordagem de novos clientes</div></div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div><div class="benefit-title">Foco na meta</div><div class="benefit-desc">Produto certo para o perfil certo — mais conversão</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-left">Sicredi · Uso Interno</span>
+      <span class="slide-footer-right">Guia da Célula Digital</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 15 — CONCLUSÃO
+══════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="s15-geo"></div>
+  <div class="s15-left">
+    <div class="s15-tag">Conclusão</div>
+    <h2>O Guia transforma<br>conhecimento <em>individual</em><br>em coletivo</h2>
+    <div class="s15-line"></div>
+    <ul class="s15-points">
+      <li>Permite evolução semanal da célula de forma estruturada</li>
+      <li>Aumenta eficiência sem depender de novos sistemas</li>
+      <li>Mantém total segurança da informação</li>
+      <li>Padroniza o atendimento em toda a equipe</li>
+      <li>Fortalece a cultura de melhoria contínua</li>
+    </ul>
+  </div>
+  <div class="s15-right">
+    <div class="s15-stat">
+      <div class="stat-val">15 / 15</div>
+      <div class="stat-label">Slides apresentados · Célula Digital</div>
+    </div>
+    <div class="s15-stat">
+      <div class="stat-val">R$ 0</div>
+      <div class="stat-label">Custo de implantação</div>
+    </div>
+    <div class="s15-stat">
+      <div class="stat-val">100%</div>
+      <div class="stat-label">Compatível com políticas de TI</div>
+    </div>
+    <div class="s15-cta">
+      <strong>Simples. Seguro. Eficiente.</strong>
+      <span>Pronto para implementação imediata · Sem custo adicional</span>
+    </div>
+  </div>
+  <div class="s15-footer">
+    <span>Sicredi · Célula Digital · Natal, RN · 2025</span>
+    <span>Uso Interno Confidencial</span>
+  </div>
+</div>
+
+</div><!-- #deck -->
+
+<!-- ── NAVIGATION ──────────────────────────────────── -->
+<div id="nav">
+  <button class="nav-btn" id="btn-prev" title="Anterior (←)">&#8592;</button>
+  <div id="progress-dots"></div>
+  <span id="slide-counter">1 / 15</span>
+  <button class="nav-btn" id="btn-next" title="Próximo (→)">&#8594;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let current  = 0;
+  let animating = false;
+
+  // Build dots
+  const dotsContainer = document.getElementById('progress-dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(d);
+  });
+
+  function goTo(idx, dir = 1) {
+    if (animating || idx === current || idx < 0 || idx >= total) return;
+    animating = true;
+
+    const prev = current;
+    current = idx;
+
+    // direction
+    const outTx = dir > 0 ? '-40px' : '40px';
+    const inTx  = dir > 0 ?  '40px' : '-40px';
+
+    slides[prev].style.transform = outTx;
+    slides[prev].style.opacity = '0';
+    slides[prev].style.pointerEvents = 'none';
+
+    slides[current].style.transform = inTx;
+    slides[current].style.opacity = '0';
+    slides[current].style.pointerEvents = 'all';
+
+    requestAnimationFrame(() => {
+      slides[current].style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+      slides[current].style.transform = 'translateX(0)';
+      slides[current].style.opacity = '1';
+      slides[prev].style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+    });
+
+    // re-trigger animations for active slide
+    slides[current].classList.remove('active');
+    void slides[current].offsetWidth;
+    slides[current].classList.add('active');
+    slides[prev].classList.remove('active');
+
+    // Update counter and dots
+    document.getElementById('slide-counter').textContent = `${current + 1} / ${total}`;
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+
+    setTimeout(() => { animating = false; }, 480);
+  }
+
+  // Initial state
+  slides.forEach((s, i) => {
+    s.style.opacity = i === 0 ? '1' : '0';
+    s.style.transform = 'translateX(0)';
+    s.style.pointerEvents = i === 0 ? 'all' : 'none';
+    s.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+  });
+
+  document.getElementById('btn-prev').addEventListener('click', () => goTo(current - 1, -1));
+  document.getElementById('btn-next').addEventListener('click', () => goTo(current + 1, 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1, 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(current - 1, -1);
+  });
+
+  // Click on slide to advance
+  document.getElementById('deck').addEventListener('click', e => {
+    if (e.target.closest('#nav')) return;
+    const x = e.clientX;
+    if (x > window.innerWidth / 2) goTo(current + 1, 1);
+    else goTo(current - 1, -1);
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goTo(current + 1, 1);
+      else goTo(current - 1, -1);
+    }
+  });
+</script>
+</body>
+</html>
