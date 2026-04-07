@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validação de Associados — Sicredi Célula Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #006B3C;
+    --verde-claro: #00A859;
+    --verde-neon: #00E676;
+    --creme: #F5F0E8;
+    --creme-escuro: #E8E1D5;
+    --cinza: #8A8A8A;
+    --escuro: #0D1A0F;
+    --card-bg: #FFFFFF;
+    --borda: #D6D0C8;
+    --perigo: #D32F2F;
+    --alerta: #E65100;
+    --ok: #2E7D32;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--creme);
+    color: var(--escuro);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--verde);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  }
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-badge {
+    width: 42px;
+    height: 42px;
+    background: var(--verde-neon);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--verde);
+  }
+
+  .header-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+  }
+
+  .header-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+  }
+
+  .header-tag {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 60px 40px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-label {
+    display: inline-block;
+    background: var(--verde);
+    color: white;
+    font-size: 11px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--escuro);
+    max-width: 700px;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 span {
+    color: var(--verde-claro);
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: var(--cinza);
+    max-width: 560px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* CONTEXTO BANNER */
+  .contexto-banner {
+    max-width: 1100px;
+    margin: 0 auto 48px;
+    padding: 0 40px;
+  }
+
+  .banner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .banner-item {
+    background: white;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border-left: 4px solid var(--verde-claro);
+  }
+
+  .banner-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .banner-text strong {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cinza);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .banner-text span {
+    font-size: 14px;
+    color: var(--escuro);
+    font-weight: 500;
+  }
+
+  /* SECTION TITLE */
+  .section-header {
+    max-width: 1100px;
+    margin: 0 auto 28px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .section-header .linha {
+    flex: 1;
+    height: 1px;
+    background: var(--borda);
+  }
+
+  .section-header .count {
+    font-size: 13px;
+    color: var(--cinza);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+  }
+
+  /* CARDS GRID */
+  .cards-grid {
+    max-width: 1100px;
+    margin: 0 auto 56px;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 20px;
+  }
+
+  .metodo-card {
+    background: white;
+    border: 1px solid var(--borda);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+  }
+
+  .metodo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    border-color: var(--verde-claro);
+  }
+
+  .metodo-card.ativo {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(0,107,60,0.12), 0 12px 40px rgba(0,0,0,0.1);
+  }
+
+  .card-header-strip {
+    height: 6px;
+    width: 100%;
+  }
+
+  .nivel-alto { background: linear-gradient(90deg, #D32F2F, #EF5350); }
+  .nivel-medio { background: linear-gradient(90deg, #E65100, #FF8F00); }
+  .nivel-baixo { background: linear-gradient(90deg, #2E7D32, #43A047); }
+
+  .card-body {
+    padding: 22px 22px 18px;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .card-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--creme);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .card-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .badge {
+    font-size: 10px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .badge-risco-alto { background: #FFEBEE; color: #C62828; }
+  .badge-risco-medio { background: #FFF3E0; color: #BF360C; }
+  .badge-risco-baixo { background: #E8F5E9; color: #1B5E20; }
+
+  .badge-canal {
+    background: var(--creme-escuro);
+    color: var(--cinza);
+  }
+
+  .card-nome {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--escuro);
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--cinza);
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+
+  .card-metricas {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .metrica {
+    background: var(--creme);
+    border-radius: 8px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .metrica-valor {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--verde);
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .metrica-label {
+    font-size: 10px;
+    color: var(--cinza);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .card-btn {
+    width: 100%;
+    padding: 11px;
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    letter-spacing: 0.04em;
+  }
+
+  .card-btn:hover { background: var(--verde-claro); }
+
+  .card-selecionado-label {
+    display: none;
+    position: absolute;
+    top: 16px;
+    left: -1px;
+    background: var(--verde);
+    color: white;
+    font-size: 10px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 0 4px 4px 0;
+    text-transform: uppercase;
+  }
+
+  .metodo-card.ativo .card-selecionado-label { display: block; }
+
+  /* PAINEL DE DETALHES */
+  .detalhe-painel {
+    max-width: 1100px;
+    margin: 0 auto 56px;
+    padding: 0 40px;
+    display: none;
+  }
+
+  .detalhe-painel.visivel { display: block; }
+
+  .detalhe-inner {
+    background: white;
+    border: 1px solid var(--borda);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .detalhe-topo {
+    background: var(--verde);
+    padding: 30px 36px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .detalhe-topo-icon {
+    font-size: 40px;
+  }
+
+  .detalhe-topo-info h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 4px;
+  }
+
+  .detalhe-topo-info p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  .detalhe-corpo {
+    padding: 32px 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .detalhe-col h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cinza);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lista-pro, .lista-contra {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lista-pro li, .lista-contra li {
+    font-size: 14px;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .lista-pro li::before {
+    content: "✓";
+    color: var(--ok);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .lista-contra li::before {
+    content: "✗";
+    color: var(--perigo);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* FLUXO */
+  .fluxo-section {
+    border-top: 1px solid var(--borda);
+    padding: 28px 36px;
+  }
+
+  .fluxo-section h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cinza);
+    margin-bottom: 20px;
+  }
+
+  .fluxo-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .fluxo-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-box {
+    background: var(--creme);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--escuro);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .step-num {
+    width: 20px;
+    height: 20px;
+    background: var(--verde);
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-arrow {
+    color: var(--cinza);
+    font-size: 18px;
+  }
+
+  /* SCRIPT SUGERIDO */
+  .script-section {
+    border-top: 1px solid var(--borda);
+    padding: 28px 36px;
+    background: var(--creme);
+  }
+
+  .script-section h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cinza);
+    margin-bottom: 16px;
+  }
+
+  .script-box {
+    background: white;
+    border: 1px solid var(--borda);
+    border-left: 4px solid var(--verde-claro);
+    border-radius: 8px;
+    padding: 18px 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--escuro);
+    font-style: italic;
+  }
+
+  .script-box strong {
+    font-style: normal;
+    color: var(--verde);
+    font-weight: 600;
+  }
+
+  /* COMPARATIVO */
+  .comparativo-section {
+    max-width: 1100px;
+    margin: 0 auto 56px;
+    padding: 0 40px;
+  }
+
+  .tabela-comparativa {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--borda);
+    font-size: 13px;
+  }
+
+  .tabela-comparativa thead {
+    background: var(--verde);
+    color: white;
+  }
+
+  .tabela-comparativa th {
+    padding: 14px 18px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: left;
+  }
+
+  .tabela-comparativa td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--borda);
+    vertical-align: middle;
+  }
+
+  .tabela-comparativa tr:last-child td {
+    border-bottom: none;
+  }
+
+  .tabela-comparativa tr:hover td {
+    background: var(--creme);
+  }
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .dot-alto { background: #EF5350; }
+  .dot-medio { background: #FFA726; }
+  .dot-baixo { background: #66BB6A; }
+
+  /* RECOMENDACAO */
+  .recomendacao-section {
+    max-width: 1100px;
+    margin: 0 auto 72px;
+    padding: 0 40px;
+  }
+
+  .rec-card {
+    background: var(--verde);
+    border-radius: 20px;
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .rec-icone {
+    font-size: 48px;
+    line-height: 1;
+  }
+
+  .rec-content h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .rec-content p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .rec-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rec-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+
+  .rec-step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--verde-neon);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 24px;
+  }
+
+  .rec-step-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.5;
+  }
+
+  .rec-step-text strong {
+    color: white;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--escuro);
+    padding: 24px 40px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 768px) {
+    header { padding: 18px 20px; }
+    .hero, .contexto-banner, .section-header, .cards-grid, .detalhe-painel, .comparativo-section, .recomendacao-section { padding-left: 20px; padding-right: 20px; }
+    .banner-grid { grid-template-columns: 1fr; }
+    .detalhe-corpo { grid-template-columns: 1fr; }
+    .rec-card { grid-template-columns: 1fr; }
+    .fluxo-steps { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">
+    <div class="logo-badge">SC</div>
+    <div>
+      <div class="header-title">Célula Digital</div>
+      <div class="header-sub">Sicredi — Validação de Associados</div>
+    </div>
+  </div>
+  <div class="header-tag">🔒 Simulador Interno</div>
+</header>
+
+<div class="hero">
+  <div class="hero-label">📋 Guia de Processo</div>
+  <h1>Como garantir que o associado <span>é quem diz ser</span>?</h1>
+  <p>Explore os métodos disponíveis para validação de identidade no atendimento digital. Entenda os riscos, vantagens e scripts de cada abordagem.</p>
+</div>
+
+<div class="contexto-banner">
+  <div class="banner-grid">
+    <div class="banner-item">
+      <div class="banner-icon">📱</div>
+      <div class="banner-text">
+        <strong>Canais</strong>
+        <span>WhatsApp + Ligação</span>
+      </div>
+    </div>
+    <div class="banner-item">
+      <div class="banner-icon">⚠️</div>
+      <div class="banner-text">
+        <strong>Problema principal</strong>
+        <span>Risco de fraude e falha na validação</span>
+      </div>
+    </div>
+    <div class="banner-item">
+      <div class="banner-icon">🚧</div>
+      <div class="banner-text">
+        <strong>Situação atual</strong>
+        <span>Sem processo definido no time</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-header">
+  <h2>Métodos de Validação</h2>
+  <div class="linha"></div>
+  <div class="count">6 opções</div>
+</div>
+
+<div class="cards-grid" id="cardsGrid">
+  <!-- Cards injetados via JS -->
+</div>
+
+<div class="detalhe-painel" id="detalhePainel">
+  <div class="detalhe-inner" id="detalheInner">
+    <!-- Detalhe injetado via JS -->
+  </div>
+</div>
+
+<div class="section-header">
+  <h2>Comparativo Geral</h2>
+  <div class="linha"></div>
+</div>
+
+<div class="comparativo-section">
+  <table class="tabela-comparativa">
+    <thead>
+      <tr>
+        <th>Método</th>
+        <th>Risco de Fraude</th>
+        <th>Facilidade pro Associado</th>
+        <th>Tempo</th>
+        <th>Custo</th>
+        <th>Canal</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaBody">
+      <!-- injetado via JS -->
+    </tbody>
+  </table>
+</div>
+
+<div class="section-header">
+  <h2>Recomendação para o Time</h2>
+  <div class="linha"></div>
+</div>
+
+<div class="recomendacao-section">
+  <div class="rec-card">
+    <div class="rec-icone">🏆</div>
+    <div class="rec-content">
+      <h3>Protocolo Híbrido — A melhor escolha para a Célula Digital</h3>
+      <p>Para um time sem processo definido, o caminho mais seguro é padronizar com uma combinação de métodos em camadas. Isso reduz fraudes sem criar atrito excessivo para os associados.</p>
+      <div class="rec-steps">
+        <div class="rec-step">
+          <div class="rec-step-num">1</div>
+          <div class="rec-step-text">
+            <strong>Perguntas de cadastro (obrigatório)</strong>
+            CPF + data de nascimento + nome completo — rápido, sem custo, em qualquer canal.
+          </div>
+        </div>
+        <div class="rec-step">
+          <div class="rec-step-num">2</div>
+          <div class="rec-step-text">
+            <strong>Token via app/SMS (para operações sensíveis)</strong>
+            Solicitações de empréstimo, desbloqueio, transferências — exigir confirmação via canal secundário.
+          </div>
+        </div>
+        <div class="rec-step">
+          <div class="rec-step-num">3</div>
+          <div class="rec-step-text">
+            <strong>Selfie com documento (casos de dúvida)</strong>
+            Quando os dados batem mas algo parece inconsistente — solicitar foto do documento via WhatsApp.
+          </div>
+        </div>
+        <div class="rec-step">
+          <div class="rec-step-num">4</div>
+          <div class="rec-step-text">
+            <strong>Encaminhar para agência (casos críticos)</strong>
+            Alta suspeita de fraude ou operação de alto valor — não arriscar, presencial resolve.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  SICREDI CÉLULA DIGITAL — USO INTERNO — 2026
+</footer>
+
+<script>
+const metodos = [
+  {
+    id: "perguntas",
+    icon: "🗣️",
+    nome: "Perguntas de Cadastro",
+    desc: "Validar o associado pedindo dados que só ele saberia: CPF, data de nascimento, nome da mãe, endereço.",
+    nivel: "medio",
+    nivelTexto: "Risco Médio",
+    canais: "📱 WhatsApp · 📞 Ligação",
+    metricas: { seguranca: "Médio", tempo: "~2 min", custo: "Zero" },
+    pros: [
+      "Zero custo e zero sistema adicional",
+      "Funciona em WhatsApp e ligação",
+      "Associado não precisa fazer nada além de responder"
+    ],
+    contras: [
+      "Dados cadastrais podem estar nas mãos de fraudadores",
+      "Não há prova de identidade real",
+      "Fácil de burlar com engenharia social"
+    ],
+    fluxo: ["Abrir cadastro", "Perguntar CPF", "Confirmar nome completo", "Perguntar data nascimento", "Validar ✓"],
+    script: `<strong>Roteiro:</strong> "Para garantir a segurança da sua conta, preciso confirmar alguns dados. Pode me informar seu CPF? [...] Seu nome completo? [...] Data de nascimento? Perfeito, tudo confere! Vamos continuar..."`
+  },
+  {
+    id: "token",
+    icon: "🔑",
+    nome: "Token via SMS ou App",
+    desc: "Enviar um código temporário por SMS ou pelo app Sicredi para o associado confirmar na hora do atendimento.",
+    nivel: "baixo",
+    nivelTexto: "Baixo Risco",
+    canais: "📱 WhatsApp · 📞 Ligação",
+    metricas: { seguranca: "Alto", tempo: "~3 min", custo: "Baixo" },
+    pros: [
+      "Confirma que o associado tem acesso ao celular cadastrado",
+      "Token expira rapidamente, difícil de fraudar",
+      "Processo padronizado e auditável"
+    ],
+    contras: [
+      "Associado precisa ter acesso ao celular cadastrado",
+      "Se número mudou, processo trava",
+      "Depende de infraestrutura de SMS/app"
+    ],
+    fluxo: ["Solicitar CPF", "Disparar token", "Associado informa o código", "Sistema valida", "Acesso liberado ✓"],
+    script: `<strong>Roteiro:</strong> "Vou enviar um código de segurança para o número (XX) 9XXXX cadastrado em seu CPF. Pode me informar o código quando receber? [...] Ótimo, identidade confirmada!"`
+  },
+  {
+    id: "selfie",
+    icon: "📸",
+    nome: "Selfie com Documento",
+    desc: "Solicitar ao associado que tire uma foto segurando o RG ou CNH via WhatsApp para comparação visual.",
+    nivel: "baixo",
+    nivelTexto: "Baixo Risco",
+    canais: "📱 WhatsApp",
+    metricas: { seguranca: "Alto", tempo: "~5 min", custo: "Zero" },
+    pros: [
+      "Alta segurança: comprova identidade física",
+      "Gratuito — funciona pelo próprio WhatsApp",
+      "Difícil de fraudar sem o documento real"
+    ],
+    contras: [
+      "Gera atrito — associado pode resistir",
+      "Qualidade da foto pode ser ruim",
+      "Equipe precisa saber verificar o documento",
+      "Questões de LGPD: foto salva onde?"
+    ],
+    fluxo: ["Identificar necessidade", "Solicitar selfie com doc", "Associado envia foto", "Colaborador verifica", "Confirma ou escala ✓"],
+    script: `<strong>Roteiro:</strong> "Para sua segurança, precisarei que você me envie uma foto segurando seu documento de identificação (RG ou CNH). É só uma medida de proteção para confirmar que é você mesmo. Pode enviar aqui pelo WhatsApp!"`
+  },
+  {
+    id: "reconhecimento",
+    icon: "🤳",
+    nome: "Biometria / Face ID (App)",
+    desc: "Utilizar a validação biométrica já existente no app Sicredi como prova de que o associado está presente.",
+    nivel: "baixo",
+    nivelTexto: "Baixo Risco",
+    canais: "📱 App Sicredi",
+    metricas: { seguranca: "Máximo", tempo: "~1 min", custo: "Zero" },
+    pros: [
+      "Máxima segurança com mínimo atrito",
+      "Associado já usa no dia a dia",
+      "Integrado ao sistema Sicredi"
+    ],
+    contras: [
+      "Funciona só se o associado tiver o app instalado",
+      "Não ajuda em ligações ou para quem não usa o app",
+      "Pode depender de aprovação do setor de TI/segurança"
+    ],
+    fluxo: ["Verificar se tem app", "Solicitar acesso no app", "Associado faz biometria", "Sistema confirma sessão ativa", "Validado ✓"],
+    script: `<strong>Roteiro:</strong> "Você tem o app Sicredi instalado? Ótimo! Para confirmar sua identidade, você consegue fazer login agora com seu Face ID ou digital? Assim consigo ver sua sessão ativa aqui no sistema."`
+  },
+  {
+    id: "perguntasecreta",
+    icon: "🧩",
+    nome: "Pergunta Secreta / Evento Pessoal",
+    desc: "Perguntar algo que só o verdadeiro associado saberia: última transação, valor do saldo aproximado, produto contratado.",
+    nivel: "medio",
+    nivelTexto: "Risco Médio",
+    canais: "📱 WhatsApp · 📞 Ligação",
+    metricas: { seguranca: "Médio", tempo: "~2 min", custo: "Zero" },
+    pros: [
+      "Difícil para fraudadores que só têm dados básicos",
+      "Cria um 'fator conhecimento' dinâmico",
+      "Não requer nenhum sistema adicional"
+    ],
+    contras: [
+      "Associado pode não lembrar da última transação",
+      "Requer que o colaborador tenha acesso ao extrato",
+      "Menos eficaz para contas com pouco movimento"
+    ],
+    fluxo: ["Confirmar dados básicos", "Abrir extrato/contrato", "Perguntar valor ou evento recente", "Associado confirma", "Validado ✓"],
+    script: `<strong>Roteiro:</strong> "Só mais uma confirmação de segurança: você consegue me dizer o valor aproximado do seu último lançamento na conta, ou qual produto tem conosco? [...] Perfeito, confirmado!"`
+  },
+  {
+    id: "presencial",
+    icon: "🏦",
+    nome: "Encaminhamento Presencial",
+    desc: "Para casos de alta suspeita, orientar o associado a comparecer à agência com documento original.",
+    nivel: "alto",
+    nivelTexto: "Situação Crítica",
+    canais: "📱 WhatsApp · 📞 Ligação",
+    metricas: { seguranca: "Máximo", tempo: "1+ dia", custo: "Zero" },
+    pros: [
+      "Único método com 100% de certeza da identidade",
+      "Elimina completamente o risco de fraude remota",
+      "Protege o colaborador de responsabilidade"
+    ],
+    contras: [
+      "Gera grande atrito e insatisfação do associado",
+      "Inviável para quem está longe da agência",
+      "Perde o propósito do atendimento digital"
+    ],
+    fluxo: ["Detectar inconsistências", "Comunicar ao associado", "Orientar documentação", "Associado vai à agência", "Validado presencialmente ✓"],
+    script: `<strong>Roteiro:</strong> "Para garantir sua segurança e a da sua conta, neste caso precisaremos que você compareça à agência com seu documento de identificação original. Posso agendar um horário para facilitar sua visita?"`
+  }
+];
+
+const nivelConfig = {
+  baixo: { classe: "nivel-baixo", badgeClasse: "badge-risco-baixo", dot: "dot-baixo" },
+  medio: { classe: "nivel-medio", badgeClasse: "badge-risco-medio", dot: "dot-medio" },
+  alto: { classe: "nivel-alto", badgeClasse: "badge-risco-alto", dot: "dot-alto" }
+};
+
+let ativoId = null;
+
+function renderCards() {
+  const grid = document.getElementById("cardsGrid");
+  grid.innerHTML = metodos.map(m => {
+    const nc = nivelConfig[m.nivel];
+    return `
+    <div class="metodo-card" id="card-${m.id}" onclick="toggleDetalhe('${m.id}')">
+      <div class="card-selecionado-label">● Selecionado</div>
+      <div class="card-header-strip ${nc.classe}"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-icon-wrap">${m.icon}</div>
+          <div class="card-badges">
+            <span class="badge ${nc.badgeClasse}">${m.nivelTexto}</span>
+          </div>
+        </div>
+        <div class="card-nome">${m.nome}</div>
+        <div class="card-desc">${m.desc}</div>
+        <div class="card-metricas">
+          <div class="metrica">
+            <div class="metrica-valor" style="font-size:13px">${m.metricas.seguranca}</div>
+            <div class="metrica-label">Segurança</div>
+          </div>
+          <div class="metrica">
+            <div class="metrica-valor" style="font-size:13px">${m.metricas.tempo}</div>
+            <div class="metrica-label">Tempo</div>
+          </div>
+          <div class="metrica">
+            <div class="metrica-valor" style="font-size:13px">${m.metricas.custo}</div>
+            <div class="metrica-label">Custo</div>
+          </div>
+        </div>
+        <div style="font-size:11px; color: var(--cinza); margin-bottom: 14px;">${m.canais}</div>
+        <button class="card-btn">Ver detalhes e script →</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function toggleDetalhe(id) {
+  const painel = document.getElementById("detalhePainel");
+
+  if (ativoId === id) {
+    // fechar
+    painel.classList.remove("visivel");
+    document.getElementById("card-" + id).classList.remove("ativo");
+    ativoId = null;
+    return;
+  }
+
+  // desmarcar anterior
+  if (ativoId) {
+    document.getElementById("card-" + ativoId)?.classList.remove("ativo");
+  }
+
+  ativoId = id;
+  document.getElementById("card-" + id).classList.add("ativo");
+
+  const m = metodos.find(x => x.id === id);
+  const inner = document.getElementById("detalheInner");
+
+  const stepsHtml = m.fluxo.map((s, i) => `
+    <div class="fluxo-step">
+      <div class="step-box"><div class="step-num">${i+1}</div> ${s}</div>
+      ${i < m.fluxo.length - 1 ? '<span class="step-arrow">→</span>' : ''}
+    </div>
+  `).join("");
+
+  inner.innerHTML = `
+    <div class="detalhe-topo">
+      <div class="detalhe-topo-icon">${m.icon}</div>
+      <div class="detalhe-topo-info">
+        <h3>${m.nome}</h3>
+        <p>${m.desc}</p>
+      </div>
+    </div>
+    <div class="detalhe-corpo">
+      <div class="detalhe-col">
+        <h4>✅ Vantagens</h4>
+        <ul class="lista-pro">${m.pros.map(p => `<li>${p}</li>`).join("")}</ul>
+      </div>
+      <div class="detalhe-col">
+        <h4>❌ Desvantagens</h4>
+        <ul class="lista-contra">${m.contras.map(c => `<li>${c}</li>`).join("")}</ul>
+      </div>
+    </div>
+    <div class="fluxo-section">
+      <h4>⚡ Fluxo de Atendimento</h4>
+      <div class="fluxo-steps">${stepsHtml}</div>
+    </div>
+    <div class="script-section">
+      <h4>💬 Script Sugerido</h4>
+      <div class="script-box">${m.script}</div>
+    </div>
+  `;
+
+  painel.classList.add("visivel");
+
+  // scroll suave pro painel
+  setTimeout(() => {
+    painel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 100);
+}
+
+function renderTabela() {
+  const tbody = document.getElementById("tabelaBody");
+  const linhas = [
+    { nome: "Perguntas de Cadastro", risco: "medio", riscoTexto: "Médio", facilidade: "⭐⭐⭐⭐⭐", tempo: "~2 min", custo: "Zero", canal: "WhatsApp + Ligação" },
+    { nome: "Token SMS/App", risco: "baixo", riscoTexto: "Baixo", facilidade: "⭐⭐⭐⭐", tempo: "~3 min", custo: "Baixo", canal: "WhatsApp + Ligação" },
+    { nome: "Selfie com Documento", risco: "baixo", riscoTexto: "Baixo", facilidade: "⭐⭐⭐", tempo: "~5 min", custo: "Zero", canal: "WhatsApp" },
+    { nome: "Biometria / Face ID", risco: "baixo", riscoTexto: "Mínimo", facilidade: "⭐⭐⭐⭐⭐", tempo: "~1 min", custo: "Zero", canal: "App Sicredi" },
+    { nome: "Pergunta Evento Pessoal", risco: "medio", riscoTexto: "Médio", facilidade: "⭐⭐⭐⭐", tempo: "~2 min", custo: "Zero", canal: "WhatsApp + Ligação" },
+    { nome: "Encaminhamento Presencial", risco: "alto", riscoTexto: "Crítico", facilidade: "⭐", tempo: "1+ dia", custo: "Zero", canal: "Todos" },
+  ];
+
+  tbody.innerHTML = linhas.map(l => {
+    const nc = nivelConfig[l.risco];
+    return `<tr>
+      <td><strong>${l.nome}</strong></td>
+      <td><span class="dot ${nc.dot}"></span>${l.riscoTexto}</td>
+      <td>${l.facilidade}</td>
+      <td>${l.tempo}</td>
+      <td>${l.custo}</td>
+      <td style="font-size:12px; color: var(--cinza)">${l.canal}</td>
+    </tr>`;
+  }).join("");
+}
+
+renderCards();
+renderTabela();
+</script>
+</body>
+</html>
