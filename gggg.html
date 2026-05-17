@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosso AP 🏠 · Julio & Letícia</title>
+<style>
+/* ─────────────────────────────────
+   DESIGN SYSTEM — Cozy Dark
+   Paleta: Noite quente, tons de areia e rosa suave
+───────────────────────────────── */
+@import url('data:text/css,');
+
+:root {
+  --bg:       #12100E;
+  --bg2:      #1A1714;
+  --bg3:      #201D1A;
+  --surface:  #272320;
+  --surface2: #2F2B28;
+  --surface3: #383330;
+  --border:   rgba(255,235,210,0.08);
+  --border2:  rgba(255,235,210,0.14);
+
+  --text:     #F5EDE0;
+  --text2:    #B8A898;
+  --text3:    #7A6A5A;
+
+  --rose:     #E8927C;
+  --rose-soft:rgba(232,146,124,0.13);
+  --rose-border:rgba(232,146,124,0.25);
+
+  --sage:     #8BAF8A;
+  --sage-soft:rgba(139,175,138,0.12);
+  --sage-border:rgba(139,175,138,0.24);
+
+  --amber:    #C9965A;
+  --amber-soft:rgba(201,150,90,0.12);
+  --amber-border:rgba(201,150,90,0.24);
+
+  --blue:     #7BA7C4;
+  --blue-soft:rgba(123,167,196,0.12);
+  --blue-border:rgba(123,167,196,0.24);
+
+  --lavender: #A898C8;
+  --lav-soft: rgba(168,152,200,0.12);
+
+  --ju:       #7BA7C4;
+  --le:       #E8927C;
+
+  --radius:   16px;
+  --radius-sm:10px;
+  --radius-xs:6px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(18,16,14,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 52px;
+}
+
+.topbar-brand {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.topbar-brand span { color: var(--rose); }
+
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  flex: 1;
+}
+
+.nav-tabs::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+  padding: 6px 13px;
+  border-radius: var(--radius-xs);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--text3);
+  font-family: inherit;
+  transition: all .15s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-tab:hover { background: var(--surface); color: var(--text2); }
+.nav-tab.active { background: var(--surface2); color: var(--text); }
+
+/* ── MAIN ── */
+.main {
+  padding: 20px 16px 60px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.screen { display: none; }
+.screen.active { display: block; animation: fadeUp .22s ease; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── SECTION TITLES ── */
+.page-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  margin-bottom: 4px;
+}
+
+.page-sub { font-size: 13px; color: var(--text3); margin-bottom: 20px; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.card-header {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-title { font-size: 13px; font-weight: 700; }
+.card-body  { padding: 14px 16px; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+
+/* ── STAT ── */
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+}
+.stat-num   { font-size: 26px; font-weight: 800; line-height: 1; }
+.stat-label { font-size: 10px; color: var(--text3); font-weight: 700; margin-top: 5px; text-transform: uppercase; letter-spacing: .5px; }
+
+/* ── HERO ── */
+.hero {
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-home {
+  background: linear-gradient(135deg, #1E1510 0%, #2A1C14 40%, #1E1520 100%);
+  border: 1px solid rgba(232,146,124,0.15);
+}
+
+.hero-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.hero-sub { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+.hero-deco {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  font-size: 100px;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* ── COUNTDOWN ── */
+.countdown-wrap {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.countdown-pill {
+  background: rgba(255,235,210,0.07);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── POST-ITS ── */
+.postit {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+  position: relative;
+  transition: transform .15s;
+}
+
+.postit:hover { transform: translateY(-1px); }
+
+.postit-from {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 6px;
+}
+
+.postit-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.postit-date { font-size: 10px; color: var(--text3); margin-top: 8px; }
+
+.postit-ju .postit-from { color: var(--ju); }
+.postit-le .postit-from { color: var(--le); }
+.postit-casal .postit-from { color: var(--sage); }
+
+/* ── PILARES ── */
+.pilar-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.pilar-header {
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background .15s;
+  user-select: none;
+}
+
+.pilar-header:hover { background: var(--surface3); }
+
+.pilar-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.pilar-nome { font-size: 13px; font-weight: 700; flex: 1; }
+
+.pilar-chevron {
+  font-size: 10px;
+  color: var(--text3);
+  transition: transform .2s;
+}
+
+.pilar-header.open .pilar-chevron { transform: rotate(180deg); }
+
+.pilar-body {
+  display: none;
+  padding: 10px 14px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.pilar-body.open { display: block; }
+
+.pilar-body textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius-xs);
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--text);
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  line-height: 1.6;
+  transition: border-color .2s;
+}
+
+.pilar-body textarea:focus { border-color: var(--rose); }
+.pilar-body textarea::placeholder { color: var(--text3); }
+
+/* ── REUNIÃO CARD ── */
+.reuniao-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+
+.reuniao-card:hover { border-color: var(--border2); }
+
+.reuniao-data { font-size: 11px; color: var(--text3); font-weight: 700; margin-bottom: 4px; }
+.reuniao-titulo { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.reuniao-preview { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+/* ── TODO ── */
+.todo-category {
+  margin-bottom: 18px;
+}
+
+.todo-cat-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--text3);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.todo-item:last-child { border-bottom: none; }
+
+.todo-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid var(--border2);
+  background: var(--surface2);
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  transition: all .15s;
+  margin-top: 1px;
+}
+
+.todo-check.checked {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: #000;
+}
+
+.todo-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+  flex: 1;
+  transition: opacity .2s;
+}
+
+.todo-text.checked { opacity: .4; text-decoration: line-through; }
+
+.todo-add {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* ── ROTINA ── */
+.dia-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 13px;
+  text-align: center;
+}
+
+.dia-nome { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--text3); margin-bottom: 4px; }
+.dia-treino { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.dia-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface3);
+  border: 1.5px solid var(--border2);
+  cursor: pointer;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all .15s;
+}
+.dia-toggle.ativo { background: var(--sage-soft); border-color: var(--sage-border); }
+
+/* ── FORMS ── */
+.form-group { margin-bottom: 12px; }
+.form-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; display: block; }
+
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius-xs);
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--rose); }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text3); }
+.form-textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+.form-select { cursor: pointer; }
+.form-select option { background: var(--surface); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* ── BTNS ── */
+.btn {
+  padding: 9px 16px;
+  border-radius: var(--radius-xs);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-rose   { background: var(--rose);   color: #fff; }
+.btn-rose:hover { opacity: .85; }
+.btn-sage   { background: var(--sage);   color: #000; }
+.btn-sage:hover { opacity: .85; }
+.btn-amber  { background: var(--amber);  color: #fff; }
+.btn-outline { background: transparent; border: 1.5px solid var(--border2); color: var(--text2); }
+.btn-outline:hover { border-color: var(--border2); background: var(--surface2); color: var(--text); }
+.btn-ghost  { background: transparent; border: none; color: var(--text3); font-family: inherit; font-size: 12px; cursor: pointer; padding: 5px 8px; border-radius: var(--radius-xs); }
+.btn-ghost:hover { background: var(--surface2); color: var(--text); }
+.btn-sm     { padding: 5px 11px; font-size: 11.5px; }
+.btn-full   { width: 100%; justify-content: center; }
+.btn-xs     { padding: 3px 9px; font-size: 11px; }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.badge-rose   { background: var(--rose-soft);  color: var(--rose);  border: 1px solid var(--rose-border); }
+.badge-sage   { background: var(--sage-soft);  color: var(--sage);  border: 1px solid var(--sage-border); }
+.badge-amber  { background: var(--amber-soft); color: var(--amber); border: 1px solid var(--amber-border); }
+.badge-blue   { background: var(--blue-soft);  color: var(--blue);  border: 1px solid var(--blue-border); }
+
+/* ── PROGRESS ── */
+.prog { height: 7px; background: var(--surface3); border-radius: 10px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 10px; transition: width .5s; }
+
+/* ── DIVIDER ── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+/* ── EMPTY ── */
+.empty { text-align: center; padding: 32px 20px; color: var(--text3); }
+.empty-icon  { font-size: 30px; margin-bottom: 8px; }
+.empty-title { font-size: 13px; font-weight: 700; color: var(--text2); margin-bottom: 4px; }
+.empty-sub   { font-size: 12px; line-height: 1.5; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  z-index: 200;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 780px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 20px 20px 40px;
+}
+
+.modal-handle { width: 36px; height: 4px; background: var(--border2); border-radius: 2px; margin: 0 auto 18px; }
+.modal-title  { font-size: 17px; font-weight: 800; margin-bottom: 16px; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 9px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 999;
+  opacity: 0;
+  transition: all .25s;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── ELOGIO DESTAQUE ── */
+.elogio-destaque {
+  background: linear-gradient(135deg, var(--surface2), var(--surface3));
+  border: 1px solid var(--rose-border);
+  border-radius: var(--radius-sm);
+  padding: 14px 15px;
+}
+
+/* ── ALINHAMENTO TAG ── */
+.alinha-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface3);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text2);
+  margin: 2px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all .15s;
+}
+
+.alinha-tag:hover, .alinha-tag.done { border-color: var(--sage-border); color: var(--sage); background: var(--sage-soft); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 540px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .form-row        { grid-template-columns: 1fr; }
+  .topbar-brand    { font-size: 12px; }
+}
+
+/* ── CHAT ── */
+.chat-wrap {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 160px);
+  min-height: 400px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 350px;
+}
+
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 78%;
+}
+
+.chat-msg.mine  { align-self: flex-end; align-items: flex-end; }
+.chat-msg.other { align-self: flex-start; align-items: flex-start; }
+
+.chat-bubble {
+  padding: 9px 13px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.chat-msg.mine  .chat-bubble { background: var(--ju); color: #fff; border-bottom-right-radius: 4px; }
+.chat-msg.other .chat-bubble { background: var(--surface3); color: var(--text); border-bottom-left-radius: 4px; }
+
+.chat-msg-meta {
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 3px;
+  padding: 0 3px;
+}
+
+.chat-date-divider {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text3);
+  padding: 10px 0 4px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.chat-input-wrap {
+  display: flex;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  align-items: flex-end;
+}
+
+.chat-user-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.chat-user-btn {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid var(--border2);
+  background: transparent;
+  color: var(--text3);
+  font-family: inherit;
+  transition: all .15s;
+}
+
+.chat-user-btn.active-ju { background: var(--blue-soft); color: var(--ju); border-color: var(--blue-border); }
+.chat-user-btn.active-le { background: var(--rose-soft); color: var(--le); border-color: var(--rose-border); }
+
+.chat-textarea {
+  flex: 1;
+  background: var(--surface2);
+  border: 1.5px solid var(--border2);
+  border-radius: 20px;
+  padding: 9px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  resize: none;
+  max-height: 120px;
+  line-height: 1.5;
+  transition: border-color .2s;
+}
+
+.chat-textarea:focus { border-color: var(--ju); }
+.chat-textarea::placeholder { color: var(--text3); }
+
+.chat-send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--ju);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: opacity .15s;
+  color: #fff;
+}
+
+.chat-send-btn:hover { opacity: .85; }
+.chat-send-btn.le-send { background: var(--le); }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 10px; }
+</style>
+</head>
+<body>
+<div id="toast"></div>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="topbar-brand">Júlio <span>&</span> Letícia</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showScreen('home')">🏠 Home</button>
+    <button class="nav-tab" onclick="showScreen('alinhamentos')">📋 Alinhamentos</button>
+    <button class="nav-tab" onclick="showScreen('ap')">🛋️ Central AP</button>
+    <button class="nav-tab" onclick="showScreen('mural')">❤️ Mural</button>
+    <button class="nav-tab" onclick="showScreen('rotina')">💪 Rotina</button>
+    <button class="nav-tab" onclick="showScreen('chat')">💬 Chat</button>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- ══ HOME ══ -->
+<div class="screen active" id="screen-home">
+
+  <div class="hero hero-home">
+    <div class="hero-deco">🏠</div>
+    <div class="hero-title" id="home-saudacao">Boa noite, amor! ✨</div>
+    <div class="hero-sub">O apartamento está chegando. Cada passo juntos conta.</div>
+    <div class="countdown-wrap">
+      <div class="countdown-pill" id="pill-proximo-ali">📋 Próx. alinhamento: —</div>
+      <div class="countdown-pill" id="pill-ap">🏠 Apartamento: Dez 2026</div>
+      <div class="countdown-pill" id="pill-progresso">🛋️ AP: <span id="prog-pct-pill">0%</span> concluído</div>
+    </div>
+  </div>
+
+  <!-- Elogio em destaque -->
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-header">
+      <span class="card-title">❤️ Último elogio registrado</span>
+      <button class="btn btn-sm btn-outline" onclick="showScreen('mural')">Ver mural</button>
+    </div>
+    <div class="card-body" id="home-elogio">
+      <div class="empty">
+        <div class="empty-icon">💌</div>
+        <div class="empty-title">Nenhum elogio ainda</div>
+        <div class="empty-sub">Vá ao Mural do Casal e deixe o primeiro!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats rápidos -->
+  <div class="grid-3" style="margin-bottom:14px">
+    <div class="stat">
+      <div class="stat-num" style="color:var(--rose)" id="stat-dividas">0</div>
+      <div class="stat-label">Tarefas AP abertas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--sage)" id="stat-reunioes">0</div>
+      <div class="stat-label">Alinhamentos feitos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--amber)" id="stat-elogios">0</div>
+      <div class="stat-label">Elogios no mural</div>
+    </div>
+  </div>
+
+  <!-- Próximo alinhamento -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">📅 Próximo alinhamento</span>
+      <button class="btn btn-sm btn-rose" onclick="novaReuniao()">Abrir reunião</button>
+    </div>
+    <div class="card-body">
+      <div class="form-group" style="margin:0">
+        <div class="form-label">Data do próximo encontro</div>
+        <input class="form-input" type="date" id="proximo-ali" onchange="salvarProximoAli()">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ ALINHAMENTOS ══ -->
+<div class="screen" id="screen-alinhamentos">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px">
+    <div>
+      <div class="page-title">📋 Alinhamentos</div>
+      <div class="page-sub">Nossas reuniões de casal</div>
+    </div>
+    <button class="btn btn-rose" onclick="novaReuniao()">+ Nova reunião</button>
+  </div>
+
+  <!-- Nova reunião form -->
+  <div class="card" id="form-reuniao" style="display:none;margin-bottom:14px">
+    <div class="card-header">
+      <span class="card-title">📝 Nova Reunião</span>
+      <button class="btn-ghost" onclick="fecharFormReuniao()">✕</button>
+    </div>
+    <div class="card-body">
+      <div class="form-row" style="margin-bottom:12px">
+        <div class="form-group" style="margin:0">
+          <div class="form-label">Data</div>
+          <input class="form-input" type="date" id="ali-data">
+        </div>
+        <div class="form-group" style="margin:0">
+          <div class="form-label">Título</div>
+          <input class="form-input" id="ali-titulo" placeholder="Ex: Alinhamento #3">
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">8 Pilares — Preencha as notas de cada um</div>
+
+      <!-- Pilares -->
+      <div id="pilares-container"></div>
+
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="btn btn-rose btn-full" onclick="salvarReuniao()">Salvar alinhamento</button>
+        <button class="btn btn-outline" onclick="fecharFormReuniao()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de reuniões -->
+  <div id="reunioes-lista">
+    <div class="empty">
+      <div class="empty-icon">📋</div>
+      <div class="empty-title">Nenhum alinhamento ainda</div>
+      <div class="empty-sub">Clique em "Nova reunião" para começar</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal reunião detalhada -->
+<div class="modal-overlay" id="modal-reuniao" onclick="if(event.target===this)closeModal('modal-reuniao')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-reuniao-titulo">—</div>
+    <div id="modal-reuniao-body"></div>
+  </div>
+</div>
+
+<!-- ══ CENTRAL AP ══ -->
+<div class="screen" id="screen-ap">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:8px">
+    <div>
+      <div class="page-title">🛋️ Central do AP</div>
+      <div class="page-sub">Projetos e tarefas da nossa mudança</div>
+    </div>
+    <button class="btn btn-sm btn-rose" onclick="openModal('modal-todo')">+ Tarefa</button>
+  </div>
+
+  <!-- Progresso -->
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-body">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+        <div style="font-size:13px;font-weight:700">Progresso geral</div>
+        <div style="font-size:18px;font-weight:800;color:var(--sage)" id="ap-pct">0%</div>
+      </div>
+      <div class="prog"><div class="prog-fill" id="ap-prog-bar" style="width:0%;background:var(--sage)"></div></div>
+      <div style="font-size:11px;color:var(--text3);margin-top:6px"><span id="ap-done">0</span> de <span id="ap-total">0</span> tarefas concluídas</div>
+    </div>
+  </div>
+
+  <!-- Categorias TODO -->
+  <div id="ap-categories"></div>
+</div>
+
+<!-- Modal nova tarefa -->
+<div class="modal-overlay" id="modal-todo" onclick="if(event.target===this)closeModal('modal-todo')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Nova Tarefa</div>
+    <div class="form-group">
+      <div class="form-label">Descrição</div>
+      <input class="form-input" id="todo-texto" placeholder="Ex: Comprar sofá 3 lugares">
+    </div>
+    <div class="form-group">
+      <div class="form-label">Categoria</div>
+      <select class="form-select" id="todo-cat">
+        <option value="moveis">🪑 Móveis para comprar</option>
+        <option value="cha">🎊 Chá de Casa Nova</option>
+        <option value="mudanca">📦 Checklist da Mudança</option>
+        <option value="doc">📄 Documentação / Burocracia</option>
+        <option value="outros">💡 Outros</option>
+      </select>
+    </div>
+    <button class="btn btn-rose btn-full" onclick="salvarTodo()">Adicionar tarefa</button>
+  </div>
+</div>
+
+<!-- ══ MURAL ══ -->
+<div class="screen" id="screen-mural">
+  <div class="page-title">❤️ Mural do Casal</div>
+  <div class="page-sub">Amor, elogios e o que queremos evoluir juntos</div>
+
+  <div class="grid-2" style="gap:14px">
+    <!-- Coluna Elogios -->
+    <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--rose)">💌 Elogios & Amor</div>
+        <button class="btn btn-xs btn-rose" onclick="openModalPostit('elogio')">+ Novo</button>
+      </div>
+      <div id="elogios-lista">
+        <div class="empty" style="padding:20px">
+          <div class="empty-icon">💌</div>
+          <div class="empty-sub">Nenhum elogio ainda</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna Alinhamentos -->
+    <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--sage)">🌱 Evoluir juntos</div>
+        <button class="btn btn-xs btn-sage" onclick="openModalPostit('alinha')">+ Novo</button>
+      </div>
+      <div id="alinha-lista">
+        <div class="empty" style="padding:20px">
+          <div class="empty-icon">🌱</div>
+          <div class="empty-sub">Nenhuma nota ainda</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal postit -->
+<div class="modal-overlay" id="modal-postit" onclick="if(event.target===this)closeModal('modal-postit')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-postit-titulo">Novo post-it</div>
+    <div class="form-group">
+      <div class="form-label">De quem é?</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-sm" id="postit-de-ju" onclick="setPostitDe('ju')" style="flex:1;background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-border)">Julio</button>
+        <button class="btn btn-sm btn-outline" id="postit-de-le" onclick="setPostitDe('le')" style="flex:1">Letícia</button>
+        <button class="btn btn-sm btn-outline" id="postit-de-casal" onclick="setPostitDe('casal')" style="flex:1">Casal 💑</button>
+      </div>
+    </div>
+    <div class="form-group" id="postit-para-wrap" style="display:none">
+      <div class="form-label">Para quem?</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-sm btn-outline" id="postit-para-ju" onclick="setPostitPara('ju')" style="flex:1">Julio</button>
+        <button class="btn btn-sm btn-outline" id="postit-para-le" onclick="setPostitPara('le')" style="flex:1">Letícia</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-label">Mensagem</div>
+      <textarea class="form-textarea" id="postit-texto" placeholder="Escreva aqui..."></textarea>
+    </div>
+    <button class="btn btn-rose btn-full" onclick="salvarPostit()">Publicar</button>
+    <input type="hidden" id="postit-tipo">
+  </div>
+</div>
+
+<!-- ══ ROTINA ══ -->
+<div class="screen" id="screen-rotina">
+  <div class="page-title">💪 Rotina & Bem-Estar</div>
+  <div class="page-sub">Treinos e combinados do casal</div>
+
+  <!-- Dias da semana -->
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-header">
+      <span class="card-title">🏋️ Semana de treinos</span>
+      <button class="btn btn-sm btn-outline" onclick="openModal('modal-treino')">Editar</button>
+    </div>
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px" id="treino-semana"></div>
+    </div>
+  </div>
+
+  <!-- Combinados FDS -->
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-header">
+      <span class="card-title">📅 Combinados do final de semana</span>
+      <button class="btn btn-sm btn-outline" onclick="openModal('modal-fds')">Editar</button>
+    </div>
+    <div class="card-body" id="fds-body">
+      <div style="font-size:13px;color:var(--text2);line-height:1.7" id="fds-texto">Nenhum combinado registrado ainda.</div>
+    </div>
+  </div>
+
+  <!-- Protocolo de chegada -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">🚪 Protocolo de chegada</span>
+      <button class="btn btn-sm btn-outline" onclick="openModal('modal-protocolo')">Editar</button>
+    </div>
+    <div class="card-body">
+      <div style="font-size:13px;color:var(--text2);line-height:1.7" id="protocolo-texto">O que fazemos ao entrar em casa juntos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal treino -->
+<div class="modal-overlay" id="modal-treino" onclick="if(event.target===this)closeModal('modal-treino')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Configurar treinos da semana</div>
+    <div id="treino-form-dias"></div>
+    <button class="btn btn-sage btn-full" onclick="salvarTreinos()">Salvar</button>
+  </div>
+</div>
+
+<!-- Modal FDS -->
+<div class="modal-overlay" id="modal-fds" onclick="if(event.target===this)closeModal('modal-fds')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Combinados do Final de Semana</div>
+    <div class="form-group">
+      <div class="form-label">Nossas rotinas e programas</div>
+      <textarea class="form-textarea" id="fds-input" rows="8" placeholder="Ex:&#10;Sábado: mercado juntos, almoço em família&#10;Domingo: treino + série juntos à noite"></textarea>
+    </div>
+    <button class="btn btn-sage btn-full" onclick="salvarFDS()">Salvar</button>
+  </div>
+</div>
+
+<!-- Modal protocolo -->
+<div class="modal-overlay" id="modal-protocolo" onclick="if(event.target===this)closeModal('modal-protocolo')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Protocolo de chegada</div>
+    <div class="form-group">
+      <div class="form-label">O que fazemos ao chegar em casa</div>
+      <textarea class="form-textarea" id="protocolo-input" rows="8" placeholder="Ex:&#10;1. Guardar a bolsa e trocar de roupa&#10;2. Abraço obrigatório :)&#10;3. Verificar a lista de tarefas do dia"></textarea>
+    </div>
+    <button class="btn btn-sage btn-full" onclick="salvarProtocolo()">Salvar</button>
+  </div>
+</div>
+
+<!-- ══ CHAT ══ -->
+<div class="screen" id="screen-chat">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <div>
+      <div class="page-title">💬 Chat do Casal</div>
+      <div class="page-sub">Só vocês dois aqui ❤️</div>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="limparChat()" style="color:var(--text3)">Limpar</button>
+  </div>
+
+  <!-- Quem está enviando -->
+  <div class="chat-user-toggle">
+    <button class="chat-user-btn active-ju" id="chat-btn-ju" onclick="setChatUser('ju')">👤 Julio</button>
+    <button class="chat-user-btn" id="chat-btn-le" onclick="setChatUser('le')">👤 Letícia</button>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="chat-messages" id="chat-messages"></div>
+    <div style="padding:10px 14px 14px;border-top:1px solid var(--border)">
+      <div class="chat-input-wrap" style="border:none;padding:0">
+        <textarea class="chat-textarea" id="chat-input" placeholder="Mensagem..." rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarMensagem()}"
+          oninput="autoResizeChat(this)"></textarea>
+        <button class="chat-send-btn" id="chat-send-btn" onclick="enviarMensagem()">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ════════ DATA ════════
+var DB = {
+  reunioes:    [],
+  todos:      {},
+  elogios:    [],
+  alinhamentos: [],
+  treinos:    {},
+  fds:        '',
+  protocolo:  '',
+  proximoAli: '',
+  pilares:    {},
+  chatLog:    [] // <--- Adicionado campo para persistir o chat
+};
+
+// ════════ PILARES CONFIG ════════
+var PILARES = [
+  { id:'financas',    nome:'Organização Financeira Trimestral', emoji:'💰', cor:'#C9965A' },
+  { id:'moveis',      nome:'Projeto Móveis do AP',               emoji:'🛋️', cor:'#7BA7C4' },
+  { id:'cha',         nome:'Nosso Chá de Casa Nova',               emoji:'🎊', cor:'#E8927C' },
+  { id:'mudanca',     nome:'A Grande Mudança (Quando e Como)',    emoji:'📦', cor:'#8BAF8A' },
+  { id:'amor',        nome:'Momento Amor & Evolução',              emoji:'❤️', cor:'#E8927C' },
+  { id:'saude',       nome:'Projeto Saúde & Bem-Estar',           emoji:'💪', cor:'#8BAF8A' },
+  { id:'fds',         nome:'Rotinas de Final de Semana',           emoji:'📅', cor:'#A898C8' },
+  { id:'protocolo',   nome:'Protocolo de Chegada',                 emoji:'🚪', cor:'#7BA7C4' },
+];
+
+var TODO_CATS = {
+  moveis:  { nome:'🪑 Móveis para comprar',        cor: '#7BA7C4' },
+  cha:     { nome:'🎊 Chá de Casa Nova',             cor: '#E8927C' },
+  mudanca: { nome:'📦 Checklist da Mudança',        cor: '#8BAF8A' },
+  doc:     { nome:'📄 Documentação / Burocracia',   cor: '#C9965A' },
+  outros:  { nome:'💡 Outros',                       cor: '#A898C8' },
+};
+
+var DIAS = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+
+// ════════ STORAGE ════════
+function load() {
+  var saved = localStorage.getItem('dashboard_casal_v1');
+  if (saved) {
+    try { DB = Object.assign(DB, JSON.parse(saved)); } catch(e) {}
+  }
+  if (!DB.todos || typeof DB.todos !== 'object') DB.todos = {};
+  if (!DB.treinos || typeof DB.treinos !== 'object') DB.treinos = {};
+  if (!DB.chatLog || !Array.isArray(DB.chatLog)) DB.chatLog = []; // <--- Garante array de chat
+  
+  // Init todos por categoria
+  Object.keys(TODO_CATS).forEach(function(k) {
+    if (!DB.todos[k]) DB.todos[k] = [];
+  });
+  // Init treinos
+  DIAS.forEach(function(d, i) {
+    if (!DB.treinos[i]) DB.treinos[i] = { ativo: false, descricao: '' };
+  });
+}
+
+function save() {
+  localStorage.setItem('dashboard_casal_v1', JSON.stringify(DB));
+}
+
+// ════════ NAV ════════
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(function(b) {
+    if (b.onclick.toString().indexOf("'" + name + "'") >= 0) b.classList.add('active');
+  });
+  if (name === 'home')         renderHome();
+  if (name === 'alinhamentos')  renderReunioes();
+  if (name === 'ap')            renderAP();
+  if (name === 'mural')         renderMural();
+  if (name === 'rotina')        renderRotina();
+  if (name === 'chat')          renderChat(); // <--- Dispara renderização do chat ao abrir a aba
+}
+
+// ════════ HOME ════════
+function renderHome() {
+  var h = new Date().getHours();
+  var saud = h < 12 ? 'Bom dia, amor! ☀️' : h < 18 ? 'Boa tarde, amor! 🌤️' : 'Boa noite, amor! 🌙';
+  document.getElementById('home-saudacao').textContent = saud;
+
+  var pa = DB.proximoAli;
+  if (pa) {
+    var d = new Date(pa + 'T12:00');
+    var hoje = new Date();
+    hoje.setHours(0,0,0,0);
+    var diff = Math.ceil((d - hoje) / 86400000);
+    var label = diff === 0 ? 'Hoje!' : diff === 1 ? 'Amanhã!' : 'em ' + diff + ' dias';
+    document.getElementById('pill-proximo-ali').textContent = '📋 Próx. alinhamento: ' + label;
+    document.getElementById('proximo-ali').value = pa;
+  }
+
+  var totalTodos = 0, doneTodos = 0;
+  Object.keys(DB.todos).forEach(function(k) {
+    (DB.todos[k] || []).forEach(function(t) {
+      totalTodos++;
+      if (t.done) doneTodos++;
+    });
+  });
+  var abertos = totalTodos - doneTodos;
+  var pct = totalTodos ? Math.round(doneTodos/totalTodos*100) : 0;
+  document.getElementById('stat-dividas').textContent = abertos;
+  document.getElementById('stat-reunioes').textContent = DB.reunioes.length;
+  document.getElementById('stat-elogios').textContent = DB.elogios.length;
+  document.getElementById('prog-pct-pill').textContent = pct + '%';
+
+  var el = document.getElementById('home-elogio');
+  if (DB.elogios.length) {
+    var ult = DB.elogios[DB.elogios.length-1];
+    var cor = ult.de === 'ju' ? 'var(--ju)' : ult.de === 'le' ? 'var(--le)' : 'var(--sage)';
+    var deLabel = ult.de === 'ju' ? 'Julio' : ult.de === 'le' ? 'Letícia' : 'Casal';
+    var paraLabel = ult.para ? (ult.para === 'ju' ? ' → para Julio' : ' → para Letícia') : '';
+    el.innerHTML =
+      '<div class="elogio-destaque">' +
+        '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:' + cor + ';margin-bottom:7px">' + deLabel + paraLabel + '</div>' +
+        '<div style="font-size:13px;color:var(--text2);line-height:1.6;font-style:italic">"' + esc(ult.texto) + '"</div>' +
+        '<div style="font-size:10px;color:var(--text3);margin-top:8px">' + ult.data + '</div>' +
+      '</div>';
+  } else {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">💌</div><div class="empty-title">Nenhum elogio ainda</div><div class="empty-sub">Vá ao Mural e deixe o primeiro!</div></div>';
+  }
+}
+
+function salvarProximoAli() {
+  DB.proximoAli = document.getElementById('proximo-ali').value;
+  save(); renderHome();
+}
+
+// ════════ ALINHAMENTOS ════════
+function renderPilares(targetId, vals) {
+  var container = document.getElementById(targetId || 'pilares-container');
+  container.innerHTML = '';
+  PILARES.forEach(function(p, i) {
+    var div = document.createElement('div');
+    div.className = 'pilar-card';
+    div.innerHTML =
+      '<div class="pilar-header" onclick="togglePilar(this)">' +
+        '<div class="pilar-num" style="background:' + p.cor + '22;color:' + p.cor + '">' + (i+1) + '</div>' +
+        '<div class="pilar-nome">' + p.emoji + ' ' + p.nome + '</div>' +
+        '<div class="pilar-chevron">▼</div>' +
+      '</div>' +
+      '<div class="pilar-body">' +
+        '<textarea placeholder="Notas sobre ' + p.nome + '..." data-pilar="' + p.id + '">' + (vals && vals[p.id] ? vals[p.id] : '') + '</textarea>' +
+      '</div>';
+    container.appendChild(div);
+  });
+}
+
+function togglePilar(header) {
+  header.classList.toggle('open');
+  var body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function novaReuniao() {
+  showScreen('alinhamentos');
+  var form = document.getElementById('form-reuniao');
+  form.style.display = 'block';
+  document.getElementById('ali-data').value = new Date().toISOString().slice(0,10);
+  document.getElementById('ali-titulo').value = 'Alinhamento #' + (DB.reunioes.length + 1);
+  renderPilares('pilares-container', {});
+  form.scrollIntoView({ behavior: 'smooth' });
+}
+
+function fecharFormReuniao() {
+  document.getElementById('form-reuniao').style.display = 'none';
+}
+
+function salvarReuniao() {
+  var data   = document.getElementById('ali-data').value;
+  var titulo = document.getElementById('ali-titulo').value.trim() || 'Alinhamento';
+  var notas  = {};
+  document.querySelectorAll('#pilares-container [data-pilar]').forEach(function(ta) {
+    notas[ta.getAttribute('data-pilar')] = ta.value.trim();
+  });
+  DB.reunioes.unshift({ id: Date.now().toString(), data: data, titulo: titulo, notas: notas });
+  save(); fecharFormReuniao(); renderReunioes();
+  showToast('Alinhamento salvo! 📋');
+}
+
+function renderReunioes() {
+  var el = document.getElementById('reunioes-lista');
+  if (!DB.reunioes.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">Nenhum alinhamento ainda</div><div class="empty-sub">Clique em "Nova reunião" para começar</div></div>';
+    return;
+  }
+  el.innerHTML = '';
+  DB.reunioes.forEach(function(r) {
+    var preview = Object.values(r.notas || {}).filter(function(v){return v;}).join(' · ').substring(0,80);
+    var div = document.createElement('div');
+    div.className = 'reuniao-card';
+    div.onclick = function() { verReuniao(r.id); };
+    div.innerHTML =
+      '<div class="reuniao-data">' + (r.data ? new Date(r.data+'T12:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—') + '</div>' +
+      '<div class="reuniao-titulo">' + esc(r.titulo) + '</div>' +
+      (preview ? '<div class="reuniao-preview">' + esc(preview) + '...</div>' : '') +
+      '<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">' +
+        Object.keys(r.notas||{}).filter(function(k){return r.notas[k];}).map(function(k) {
+          var p = PILARES.find(function(p){return p.id===k;});
+          return p ? '<span class="badge badge-blue">' + p.emoji + ' ' + p.nome.split(' ').slice(0,2).join(' ') + '</span>' : '';
+        }).join('') +
+      '</div>';
+    el.appendChild(div);
+  });
+}
+
+function verReuniao(id) {
+  var r = DB.reunioes.find(function(x){return x.id===id;});
+  if (!r) return;
+  document.getElementById('modal-reuniao-titulo').textContent = r.titulo;
+  var body = document.getElementById('modal-reuniao-body');
+  var html = '<div style="font-size:12px;color:var(--text3);margin-bottom:16px">' + (r.data ? new Date(r.data+'T12:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—') + '</div>';
+  PILARES.forEach(function(p) {
+    var nota = r.notas && r.notas[p.id];
+    if (!nota) return;
+    html += '<div style="margin-bottom:14px">' +
+      '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:' + p.cor + ';margin-bottom:5px">' + p.emoji + ' ' + p.nome + '</div>' +
+      '<div style="font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-wrap;background:var(--surface2);border-radius:8px;padding:10px 12px">' + esc(nota) + '</div>' +
+    '</div>';
+  });
+  html += '<button class="btn btn-red btn-sm" onclick="removerReuniao(\'' + id + '\')" style="background:var(--rose-soft);color:var(--rose);border:1px solid var(--rose-border);margin-top:8px">Remover reunião</button>';
+  body.innerHTML = html;
+  openModal('modal-reuniao');
+}
+
+function removerReuniao(id) {
+  if (!confirm('Remover este alinhamento?')) return;
+  DB.reunioes = DB.reunioes.filter(function(r){return r.id!==id;});
+  save(); closeModal('modal-reuniao'); renderReunioes();
+}
+
+// ════════ AP / TODO ════════
+function renderAP() {
+  var el     = document.getElementById('ap-categories');
+  var total  = 0;
+  var done   = 0;
+
+  el.innerHTML = '';
+
+  Object.keys(TODO_CATS).forEach(function(catKey) {
+    var cat   = TODO_CATS[catKey];
+    var items = DB.todos[catKey] || [];
+    var catDone = items.filter(function(t){return t.done;}).length;
+    total += items.length;
+    done  += catDone;
+
+    var div = document.createElement('div');
+    div.className = 'todo-category';
+
+    var listHtml = '';
+    items.forEach(function(item, i) {
+      listHtml +=
+        '<div class="todo-item">' +
+          '<div class="todo-check ' + (item.done?'checked':'') + '" onclick="toggleTodo(\'' + catKey + '\',' + i + ')">' + (item.done?'✓':'') + '</div>' +
+          '<div class="todo-text ' + (item.done?'checked':'') + '">' + esc(item.texto) + '</div>' +
+          '<button class="btn-ghost" style="font-size:11px" onclick="removerTodo(\'' + catKey + '\',' + i + ')">✕</button>' +
+        '</div>';
+    });
+
+    div.innerHTML =
+      '<div class="todo-cat-title"><span style="color:' + cat.cor + '">●</span>' + cat.nome + '<span class="badge badge-sage" style="margin-left:auto">' + catDone + '/' + items.length + '</span></div>' +
+      '<div class="card"><div class="card-body" style="padding:8px 14px">' +
+        (listHtml || '<div style="font-size:12px;color:var(--text3);padding:8px 0">Nenhuma tarefa aqui</div>') +
+        '<div class="todo-add" style="margin-top:8px">' +
+          '<input class="form-input" placeholder="Nova tarefa..." id="quick-todo-' + catKey + '" style="font-size:12px;padding:7px 10px" onkeydown="if(event.key===\'Enter\')salvarQuickTodo(\'' + catKey + '\')">' +
+          '<button class="btn btn-sm btn-outline" onclick="salvarQuickTodo(\'' + catKey + '\')">+</button>' +
+        '</div>' +
+      '</div></div>';
+
+    el.appendChild(div);
+  });
+
+  var pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('ap-pct').textContent = pct + '%';
+  document.getElementById('ap-prog-bar').style.width = pct + '%';
+  document.getElementById('ap-done').textContent  = done;
+  document.getElementById('ap-total').textContent = total;
+  document.getElementById('stat-dividas').textContent = total - done;
+  document.getElementById('prog-pct-pill').textContent = pct + '%';
+}
+
+function toggleTodo(cat, idx) {
+  DB.todos[cat][idx].done = !DB.todos[cat][idx].done;
+  save(); renderAP();
+}
+
+function removerTodo(cat, idx) {
+  DB.todos[cat].splice(idx, 1);
+  save(); renderAP();
+}
+
+function salvarQuickTodo(cat) {
+  var input = document.getElementById('quick-todo-' + cat);
+  var texto = input.value.trim();
+  if (!texto) return;
+  if (!DB.todos[cat]) DB.todos[cat] = [];
+  DB.todos[cat].push({ texto: texto, done: false });
+  input.value = '';
+  save(); renderAP();
+}
+
+function salvarTodo() {
+  var texto = document.getElementById('todo-texto').value.trim();
+  var cat   = document.getElementById('todo-cat').value;
+  if (!texto) return;
+  if (!DB.todos[cat]) DB.todos[cat] = [];
+  DB.todos[cat].push({ texto: texto, done: false });
+  save(); closeModal('modal-todo'); renderAP();
+  showToast('Tarefa adicionada!');
+}
+
+// ════════ MURAL ════════
+var postitDe   = 'ju';
+var postitPara = 'le';
+var postitTipo = 'elogio';
+
+function openModalPostit(tipo) {
+  postitTipo = tipo;
+  document.getElementById('modal-postit-titulo').textContent = tipo === 'elogio' ? '💌 Novo elogio' : '🌱 Alinhamento de rotina';
+  document.getElementById('postit-texto').value = '';
+  document.getElementById('postit-para-wrap').style.display = tipo === 'elogio' ? 'block' : 'none';
+  setPostitDe('ju');
+  if (tipo === 'elogio') setPostitPara('le');
+  openModal('modal-postit');
+}
+
+function setPostitDe(de) {
+  postitDe = de;
+  var btns = { ju:'postit-de-ju', le:'postit-de-le', casal:'postit-de-casal' };
+  Object.keys(btns).forEach(function(k) {
+    var btn = document.getElementById(btns[k]);
+    btn.className = 'btn btn-sm' + (k===de?' btn-rose':' btn-outline');
+    if (k==='ju' && k===de) { btn.style='flex:1;background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-border)'; }
+    else if (k==='le' && k===de) { btn.style='flex:1;background:var(--rose-soft);color:var(--rose);border:1px solid var(--rose-border)'; }
+    else if (k==='casal' && k===de) { btn.style='flex:1;background:var(--sage-soft);color:var(--sage);border:1px solid var(--sage-border)'; }
+    else { btn.style='flex:1'; }
+  });
+}
+
+function setPostitPara(para) {
+  postitPara = para;
+  var btns = { ju:'postit-para-ju', le:'postit-para-le' };
+  Object.keys(btns).forEach(function(k) {
+    var btn = document.getElementById(btns[k]);
+    btn.className = 'btn btn-sm' + (k===para?' btn-rose':' btn-outline');
+  });
+}
+
+function salvarPostit() {
+  var texto = document.getElementById('postit-texto').value.trim();
+  if (!texto) return;
+  var item = {
+    id:    Date.now().toString(),
+    de:    postitDe,
+    para:  postitTipo === 'elogio' ? postitPara : null,
+    texto: texto,
+    data:  new Date().toLocaleDateString('pt-BR')
+  };
+  if (postitTipo === 'elogio') DB.elogios.push(item);
+  else DB.alinhamentos.push(item);
+  save(); closeModal('modal-postit'); renderMural(); renderHome();
+  showToast('Publicado! ❤️');
+}
+
+function renderMural() {
+  renderPostitLista('elogios-lista', DB.elogios, 'elogio');
+  renderPostitLista('alinha-lista',  DB.alinhamentos, 'alinha');
+}
+
+function renderPostitLista(elId, lista, tipo) {
+  var el = document.getElementById(elId);
+  if (!lista.length) {
+    el.innerHTML = '<div class="empty" style="padding:20px"><div class="empty-icon">' + (tipo==='elogio'?'💌':'🌱') + '</div><div class="empty-sub">Nenhuma mensagem ainda</div></div>';
+    return;
+  }
+  el.innerHTML = '';
+  lista.slice().reverse().forEach(function(item) {
+    var cls = item.de === 'ju' ? 'postit-ju' : item.de === 'le' ? 'postit-le' : 'postit-casal';
+    var deLabel = item.de === 'ju' ? 'Julio' : item.de === 'le' ? 'Letícia' : 'Casal 💑';
+    var paraLabel = item.para ? (item.para === 'ju' ? ' → Julio' : ' → Letícia') : '';
+    var div = document.createElement('div');
+    div.className = 'postit ' + cls;
+    div.style.marginBttom = '8px';
+    div.innerHTML =
+      '<div class="postit-from">' + deLabel + paraLabel + '</div>' +
+      '<div class="postit-text">' + esc(item.texto) + '</div>' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">' +
+        '<div class="postit-date">' + item.data + '</div>' +
+        '<button class="btn-ghost" style="font-size:11px" onclick="removerPostit(\'' + tipo + '\',\'' + item.id + '\')">✕</button>' +
+      '</div>';
+    el.appendChild(div);
+  });
+}
+
+function removerPostit(tipo, id) {
+  if (tipo === 'elogio') DB.elogios = DB.elogios.filter(function(x){return x.id!==id;});
+  else DB.alinhamentos = DB.alinhamentos.filter(function(x){return x.id!==id;});
+  save(); renderMural(); renderHome();
+}
+
+// ════════ ROTINA ════════
+function renderRotina() {
+  var el = document.getElementById('treino-semana');
+  el.innerHTML = '';
+  DIAS.forEach(function(dia, i) {
+    var t = DB.treinos[i] || {};
+    var div = document.createElement('div');
+    div.className = 'dia-card';
+    div.innerHTML =
+      '<div class="dia-nome">' + dia + '</div>' +
+      '<div class="dia-treino" style="color:' + (t.ativo?'var(--sage)':'var(--text3)') + '">' + (t.descricao || (t.ativo?'Treino':'Descanso')) + '</div>' +
+      '<div class="dia-toggle ' + (t.ativo?'ativo':'') + '">' + (t.ativo?'💪':'😴') + '</div>';
+    el.appendChild(div);
+  });
+
+  var fds = document.getElementById('fds-texto');
+  fds.textContent = DB.fds || 'Nenhum combinado registrado ainda.';
+
+  var prot = document.getElementById('protocolo-texto');
+  prot.textContent = DB.protocolo || 'O que fazemos ao chegar em casa juntos.';
+
+  document.getElementById('fds-input').value       = DB.fds || '';
+  document.getElementById('protocolo-input').value  = DB.protocolo || '';
+
+  var formDias = document.getElementById('treino-form-dias');
+  formDias.innerHTML = '';
+  DIAS.forEach(function(dia, i) {
+    var t = DB.treinos[i] || {};
+    var div = document.createElement('div');
+    div.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)';
+    div.innerHTML =
+      '<div style="font-size:12px;font-weight:700;color:var(--text2);min-width:32px">' + dia + '</div>' +
+      '<input class="form-input" style="flex:1;font-size:12px;padding:7px 10px" id="treino-desc-' + i + '" placeholder="Ex: Peito + tríceps" value="' + esc(t.descricao||'') + '">' +
+      '<div class="dia-toggle ' + (t.ativo?'ativo':'') + '" id="treino-tog-' + i + '" onclick="toggleDia(' + i + ')" style="flex-shrink:0">' + (t.ativo?'💪':'😴') + '</div>';
+    formDias.appendChild(div);
+  });
+}
+
+function toggleDia(i) {
+  if (!DB.treinos[i]) DB.treinos[i] = {};
+  DB.treinos[i].ativo = !DB.treinos[i].ativo;
+  var tog = document.getElementById('treino-tog-' + i);
+  if (tog) {
+    tog.className = 'dia-toggle ' + (DB.treinos[i].ativo?'ativo':'');
+    tog.textContent = DB.treinos[i].ativo ? '💪' : '😴';
+  }
+}
+
+function salvarTreinos() {
+  DIAS.forEach(function(_, i) {
+    if (!DB.treinos[i]) DB.treinos[i] = {};
+    var el = document.getElementById('treino-desc-' + i);
+    if (el) DB.treinos[i].descricao = el.value.trim();
+  });
+  save(); closeModal('modal-treino'); renderRotina();
+  showToast('Treinos salvos! 💪');
+}
+
+function salvarFDS() {
+  DB.fds = document.getElementById('fds-input').value.trim();
+  save(); closeModal('modal-fds'); renderRotina();
+  showToast('Combinados salvos!');
+}
+
+function salvarProtocolo() {
+  DB.protocolo = document.getElementById('protocolo-input').value.trim();
+  save(); closeModal('modal-protocolo'); renderRotina();
+  showToast('Protocolo salvo!');
+}
+
+// ════════ CHAT (ADICIONADO E CORRIGIDO) ════════
+var currentChatUser = 'ju';
+
+function setChatUser(user) {
+  currentChatUser = user;
+  var btnJu = document.getElementById('chat-btn-ju');
+  var btnLe = document.getElementById('chat-btn-le');
+  var sendBtn = document.getElementById('chat-send-btn');
+  var textarea = document.getElementById('chat-input');
+
+  if (user === 'ju') {
+    btnJu.className = 'chat-user-btn active-ju';
+    btnLe.className = 'chat-user-btn';
+    sendBtn.classList.remove('le-send');
+    sendBtn.style.background = 'var(--ju)';
+    textarea.style.borderColor = 'var(--ju)';
+  } else {
+    btnJu.className = 'chat-user-btn';
+    btnLe.className = 'chat-user-btn active-le';
+    sendBtn.classList.add('le-send');
+    sendBtn.style.background = 'var(--le)';
+    textarea.style.borderColor = 'var(--le)';
+  }
+  renderChat();
+}
+
+function autoResizeChat(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
+}
+
+function enviarMensagem() {
+  var input = document.getElementById('chat-input');
+  var texto = input.value.trim();
+  if (!texto) return;
+
+  var msg = {
+    id: Date.now().toString(),
+    sender: currentChatUser,
+    texto: texto,
+    hora: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+    data: new Date().toLocaleDateString('pt-BR')
+  };
+
+  DB.chatLog.push(msg);
+  save();
+
+  input.value = '';
+  input.style.height = 'auto';
+  renderChat();
+}
+
+function renderChat() {
+  var container = document.getElementById('chat-messages');
+  container.innerHTML = '';
+
+  if (!DB.chatLog.length) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon">💬</div><div class="empty-title">Nenhuma mensagem por aqui</div><div class="empty-sub">Mandem um oi para começar!</div></div>';
+    return;
+  }
+
+  var ultimaData = '';
+
+  DB.chatLog.forEach(function(msg) {
+    if (msg.data !== ultimaData) {
+      var divData = document.createElement('div');
+      divData.className = 'chat-date-divider';
+      divData.textContent = msg.data;
+      container.appendChild(divData);
+      ultimaData = msg.data;
+    }
+
+    var isMine = msg.sender === currentChatUser;
+    var cls = isMine ? 'mine' : 'other';
+
+    var divMsg = document.createElement('div');
+    divMsg.className = 'chat-msg ' + cls;
+    divMsg.style.marginBottom = '8px';
+
+    // Ajuste dinâmico do background da bolha baseado em quem enviou a mensagem
+    var bubbleStyle = '';
+    if (isMine) {
+      bubbleStyle = 'style="background: ' + (msg.sender === 'ju' ? 'var(--ju)' : 'var(--le)') + '"';
+    }
+
+    divMsg.innerHTML =
+      '<div class="chat-bubble" ' + bubbleStyle + '>' + esc(msg.texto) + '</div>' +
+      '<div class="chat-msg-meta">' + msg.hora + '</div>';
+
+    container.appendChild(divMsg);
+  });
+
+  // Mantém o chat sempre no final ao enviar/atualizar
+  container.scrollTop = container.scrollHeight;
+}
+
+function limparChat() {
+  if (!confirm('Deseja limpar todo o histórico do chat?')) return;
+  DB.chatLog = [];
+  save();
+  renderChat();
+}
+
+// ════════ MODAL ════════
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ════════ UTILS ════════
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+// ════════ INIT ════════
+load();
+renderHome();
+</script>
+</body>
+</html>
